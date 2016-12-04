@@ -1,0 +1,104 @@
+[
+    {
+        "id": 1,
+        "name": "bulbasaur",
+        "type": [
+            "grass",
+            "poison"
+        ],
+        "base_experience": 64,
+        "base_hp": 45,
+        "base_atk": 49,
+        "base_def": 49,
+        "base_speed": 45,
+        "base_special_atk": 65,
+        "base_special_def": 65,
+        "dmg_when_atked": [
+            {
+                "type": "flying",
+                "multiply": 2
+            },
+            {
+                "type": "psychic",
+                "multiply": 2
+            },
+            {
+                "type": "fire",
+                "multiply": 2
+            },
+            {
+                "type": "ground",
+                "multiply": 2
+            },
+            {
+                "type": "ice",
+                "multiply": 2
+            },
+            {
+                "type": "fairy",
+                "multiply": 0.5
+            },
+            {
+                "type": "fighting",
+                "multiply": 0.5
+            },
+            {
+                "type": "electric",
+                "multiply": 0.5
+            },
+            {
+                "type": "water",
+                "multiply": 0.5
+            },
+            {
+                "type": "grass",
+                "multiply": 0.25
+            }
+        ]
+    },
+    {
+        "id": 2,
+        "name": "charmander",
+        "type": [
+            "fire"
+        ],
+        "base_experience": 62,
+        "base_hp": 39,
+        "base_atk": 52,
+        "base_def": 43,
+        "speed": 65,
+        "base_special_atk": 60,
+        "base_special_def": 50,
+        "dmg_when_atked": [
+            {
+                "type": "water",
+                "multiply": 2
+            },
+            {
+                "type": "rock",
+                "multiply": 2
+            },
+            {
+                "type": "ground",
+                "multiply": 2
+            },
+    
+            {
+                "type": "fairy",
+                "multiply": 0.5
+            },
+            {
+                "type": "ice",
+                "multiply": 0.5
+            },
+            {
+                "type": "fire",
+                "multiply": 0.5
+            },
+            {
+                "type": "steel",
+                "multiply": 0.5
+            }
+        ]
+    }
+]
