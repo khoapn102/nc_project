@@ -2,12 +2,12 @@
     "player_age": 26, 
     "player_bag": [
         {
-            "accum_exp": 568, 
-            "atk": 139.5, 
-            "b_def": 141.8, 
+            "accum_exp": 1136, 
+            "atk": 209.3, 
+            "b_def": 212.7, 
             "b_exp": 142, 
-            "cur_lvl": 3, 
-            "curr_exp": 284, 
+            "cur_lvl": 4, 
+            "curr_exp": 568, 
             "dmg_atked": [
                 {
                     "multiply": 2, 
@@ -53,13 +53,13 @@
             "ev": 0.5, 
             "evolve_id": 3, 
             "evolve_lvl": 36, 
-            "hp": 135.0, 
+            "hp": 202.5, 
             "id": 2, 
             "is_new": false, 
             "name": "ivysaur", 
-            "nxt_lvl": 285, 
-            "spec_atk": 180.0, 
-            "spec_def": 180.0, 
+            "nxt_lvl": 569, 
+            "spec_atk": 270.0, 
+            "spec_def": 270.0, 
             "speed": 60, 
             "type": [
                 "grass", 

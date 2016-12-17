@@ -1,2 +1,2 @@
-import player
 import pokemon
+import player
