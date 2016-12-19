@@ -1,21 +1,22 @@
 import socket
-import time
-import threading
 
 # Using UDP
 client_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
 data = "Connect-Khoa-26"
-flag = True
+client_socket.sendto(data,("localhost", 9000))
 
 while 1:
     # Send 'Connect Signal'
-	client_socket.sendto(data,("localhost", 9000))
+	recvData, address = client_socket.recvfrom(1024)
+
+	print recvData
 	
-	if(data.lower() == 'q'):
+	if(recvData.lower() == 'q'):
+		print "End the current session Pokecat game"
+		print "Thank you for playing"
 		break
 
-	data = raw_input("(Type q or Q to quit)")
+	# data = raw_input("(Type q or Q to quit)")
 	
 client_socket.close()
-# t.join()

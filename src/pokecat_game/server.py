@@ -10,11 +10,13 @@ import random
 import json
 
 # The constant parameters of the PokeCat module
-pokeNum = 150
-worldSz = 1000
-maxPokeNum = 50
-spawning_time = 60
-despawning_time = 300
+pokeNum = 13
+worldSz = 5
+maxPokeNum = 5
+moveDuration = 1
+turnDuration = 120
+spawning_time = 5
+despawning_time = 6
 
 # Binding Server
 server_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -26,10 +28,29 @@ poke_world = [[0 for x in range(worldSz)] for y in range(worldSz)]
 player_world = [[0 for x in range(worldSz)] for y in range(worldSz)]
 # Get all Pokemons Data
 file = open('../../data/pokedex.json').read()
-data = json.loads(file)
+pokeData = json.loads(file)
 # print data
 
 print "Game server is waiting for connection ..."
+
+def displayPoke():
+	global poke_world
+	for x in range(worldSz):
+		for y in range(worldSz):
+			print poke_world[x][y],
+		print ""
+
+	print "\n"
+
+def displayPlayer():
+	global player_world
+	for x in range(worldSz):
+		for y in range(worldSz):
+			print player_world[x][y],
+		print ""
+
+	print "\n"
+
 
 def generate_pos():
 	x = random.randint(0, worldSz - 1)
@@ -52,6 +73,7 @@ def generate_pokemon():
 
 	Timer(spawning_time, generate_pokemon).start()
 	batch_loc = []
+
 	print 'Spawning Pokemon.............!!!'
 	count = 0
 	while count < maxPokeNum:
@@ -63,6 +85,7 @@ def generate_pokemon():
 			poke_world[x][y] = index
 			count += 1
 	print 'Complete Spawning !!!'
+	# displayPoke()
 	time.sleep(despawning_time) # Wait for 5 mins
 	for loc in batch_loc:
 		x = loc[0]
@@ -71,9 +94,10 @@ def generate_pokemon():
 		if poke_world[x][y] != 0:
 			poke_world[x][y] = 0
 	print 'Despawned Pokemon............!!!'
+	# displayPoke()
 	return
 
-
+# A class to handle the connection of each player
 class PlayerHandler(Thread):
 
 	def __init__(self, name, age, address):
@@ -84,58 +108,109 @@ class PlayerHandler(Thread):
 		self.x = x
 		self.y = y
 		self.adr = address
+		# Create a class player to store their info for later use (e.g., save to Json)
 		self.player = player(self.name, self.age, [self.x, self.y])
+		self.done = False
 
 	def run(self):
 
-		print "Start moving"
-		move_thread = self.automove()
+		global server_socket
 
-		time.sleep(120)
+		print "Start moving"
+
+		# Automove the player to catch pokemon
+		displayPlayer()
+		self.automove(0)
+
+        # End the current session of the client after 120 seconds
+		while not self.done:
+			pass
 
 		print "End moving"
-		# move_thread.cancel()
+
+		# playerDAO(self.player).saveToJson()
+		server_socket("q", self.adr)
 
 		return
 
-	def automove(self):
+	def automove(self, sec):
 
 		global player_world
+		global server_socket
+		global worldSz
 
-		Timer(1, self.automove).start()
+		if sec == turnDuration:
+			self.done = True
+			return
 
-		# Options: clockwise
-		# 1: Move up
-		# 2: Move right
-		# 3: Move down
-		# 4: Move left
+		# Repeat the automove function every 1 second until 120 seconds
+		Timer(moveDuration, self.automove, (sec + 1,)).start()
 
+		# Old position of the player
 		oldX = self.x
 		oldY = self.y
 
-		option = random.randint(1, 4)
+		# New position of the player
+		newX = self.x
+		newY = self.y
 
-		print "Player ", self.name, " ", option
-		if option == 1:
-			self.y += 1
-		elif option == 2:
-			self.x += 1
-		elif option == 3:
-			self.y -= 1
-		elif option == 4:
-			self.x -= 1
+		status = "Player " + self.name + " "
+		direction = ""
 
-		if self.x < 0:
-			self.x = worldSz - 1
+		while player_world[newX][newY] != 0:
+			newX = self.x
+			newY = self.y
 
-		if self.y < 0:
-			self.y = worldSz - 1
+			# Options: clockwise
+			# 1: Move up
+			# 2: Move right
+			# 3: Move down
+			# 4: Move left
+			option = random.randint(1, 4)
 
-		self.x %= worldSz
-		self.y %= worldSz
+			if option == 1:
+				newX -= 1
+				direction = "moved up."
+			elif option == 2:
+				newY += 1
+				direction = "moved right."
+			elif option == 3:
+				newX += 1
+				direction = "moved down."
+			elif option == 4:
+				newY -= 1
+				direction = "moved left."
 
+			if newX < 0:
+				newX = worldSz - 1
+
+			if newY < 0:
+				newY = worldSz - 1
+
+			newX %= worldSz
+			newY %= worldSz
+
+		# print option
+		status += direction
+		print status
+		# Send the moving information back to the current client
+		server_socket.sendto(status, self.adr)
+
+		self.x = newX
+		self.y = newY
+
+		# Reset the position of the player on the field
 		player_world[oldX][oldY] = 0
 		player_world[self.x][self.y] = 1
+
+		displayPlayer()
+
+        # Catch a pokemon if found
+		if poke_world[self.x][self.y] != 0:
+			index = poke_world[self.x][self.y]
+			self.catch_pokemon(index)
+			poke_world[self.x][self.y] = 0
+
 
 	def generate_player(self):
 		"""
@@ -167,7 +242,14 @@ class PlayerHandler(Thread):
 		:return:
 		"""
 
-		poke_a = pokemonDAO(data[index - 1]).create_pokemon()
+		global pokeData
+		global server_socket
+
+		poke_a = pokemonDAO(pokeData[index - 1]).create_pokemon()
+		status = "Player " + self.name + " just caught " + poke_a.name
+		print status
+		# Send the name of caught pokemon to client
+		server_socket.sendto(status, self.adr)
 		self.player.add_pokemon(poke_a)
 		return
 

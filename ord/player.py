@@ -26,7 +26,7 @@ class playerDAO(object):
         self.player = player
 
     def saveToJson(self, index):
-        file = 'player' + str(index) + '.txt'
+        file = 'player' + str(index) + '.json'
         result = {
             'player_name': self.player.name,
             'player_age': self.player.age,

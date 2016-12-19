@@ -89,4 +89,9 @@ class pokemonDAO(object):
                        spec_atk, spec_def, evolve_lvl, evolve_id, dmg_atked)
 
 
+# file = open('../data/pokedex.json').read()
+# data = json.loads(file)
+#
+# print data[5]['name']
+
 
