@@ -10,12 +10,12 @@ while 1:
     # Send 'Connect Signal'
 	recvData, address = client_socket.recvfrom(1024)
 
-	print recvData
-	
 	if(recvData.lower() == 'q'):
 		print "End the current session Pokecat game"
 		print "Thank you for playing"
 		break
+
+	print recvData
 
 	# data = raw_input("(Type q or Q to quit)")
 	

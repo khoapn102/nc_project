@@ -11,12 +11,20 @@ import json
 
 # The constant parameters of the PokeCat module
 pokeNum = 13
-worldSz = 5
-maxPokeNum = 5
+worldSz = 1000
+maxPokeNum = 50
 moveDuration = 1
 turnDuration = 120
-spawning_time = 5
-despawning_time = 6
+spawning_time = 60
+despawning_time = 300
+
+# pokeNum = 13
+# worldSz = 5
+# maxPokeNum = 5
+# moveDuration = 1
+# turnDuration = 5
+# spawning_time = 5
+# despawning_time = 6
 
 # Binding Server
 server_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -129,7 +137,7 @@ class PlayerHandler(Thread):
 		print "End moving"
 
 		# playerDAO(self.player).saveToJson()
-		server_socket("q", self.adr)
+		server_socket.sendto("q", self.adr)
 
 		return
 
