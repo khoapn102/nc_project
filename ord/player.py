@@ -4,9 +4,10 @@ import json
 from pokemon import *
 
 class player(object):
-    def __init__(self, name, age, location):
+    def __init__(self, name, password, age, location):
         self.name = name
         self.age = age
+        self.password = password
         self.location = location
         # Bag to store pokemon
         self.bag = []
