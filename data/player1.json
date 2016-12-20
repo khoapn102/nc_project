@@ -2,12 +2,12 @@
     "player_age": 26, 
     "player_bag": [
         {
-            "accum_exp": 1136, 
-            "atk": 209.3, 
-            "b_def": 212.7, 
+            "accum_exp": 4653056, 
+            "atk": 941110.5, 
+            "b_def": 956381.0, 
             "b_exp": 142, 
-            "cur_lvl": 4, 
-            "curr_exp": 568, 
+            "cur_lvl": 16, 
+            "curr_exp": 2326528, 
             "dmg_atked": [
                 {
                     "multiply": 2, 
@@ -50,16 +50,16 @@
                     "type": "grass"
                 }
             ], 
-            "ev": 0.5, 
+            "ev": 0.9, 
             "evolve_id": 3, 
             "evolve_lvl": 36, 
-            "hp": 202.5, 
+            "hp": 910728.3, 
             "id": 2, 
             "is_new": false, 
             "name": "ivysaur", 
-            "nxt_lvl": 569, 
-            "spec_atk": 270.0, 
-            "spec_def": 270.0, 
+            "nxt_lvl": 2326529, 
+            "spec_atk": 1214422.4, 
+            "spec_def": 1214422.4, 
             "speed": 60, 
             "type": [
                 "grass", 
@@ -67,5 +67,6 @@
             ]
         }
     ], 
-    "player_name": "Khoa"
+    "player_name": "Khoa", 
+    "player_password": 123
 }

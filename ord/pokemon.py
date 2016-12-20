@@ -9,7 +9,7 @@ __version__ = '0.01'
 class pokemon(object):
     # Define Attributes
     def __init__(self, id, name, type, b_exp, hp, atk, b_def, speed,
-                 spec_atk, spec_def, evolve_lvl, evolve_id, dmg_atked):
+                 spec_atk, spec_def, evolve_lvl, evolve_id, dmg_atked, cur_lvl):
         # Inialize Pokemon
         self.is_new = True # pokemon just spawn
         self.id = id
@@ -33,7 +33,7 @@ class pokemon(object):
         # EV = 0.5 -> 1.0 rounded with 1 decimal
         self.ev = round(random.uniform(0.5, 1.0),1)
         # Pokemon when spawning get random lvl 1-5
-        self.cur_lvl = random.randint(1,5)
+        self.cur_lvl = cur_lvl
         self.nxt_lvl = self.cur_lvl + 1
         # Recalculate Attribute when lvl up
         self.level_up()
@@ -65,13 +65,42 @@ class pokemon(object):
             self.spec_def = round(self.spec_def*(1+self.ev), 1)
         return
 
+    def evolve(self, data, evolve_id):
+        poke_evolved = pokemonDAO(data[evolve_id]).create_pokemon(self.cur_lvl)
+        self.id = poke_evolved.id
+        self.name = poke_evolved.name
+        self.type = poke_evolved.type
+        # Base exp that Pokemon yield after defeated
+        self.b_exp = poke_evolved.b_exp
+        # Current Experience of Pokemon
+
+        # Amount Exp Pokemon need to lvl up
+
+        self.hp = poke_evolved.hp #
+        self.atk = poke_evolved.atk #
+        self.b_def = poke_evolved.b_def #
+        self.speed = poke_evolved.speed
+        self.spec_atk = poke_evolved.spec_atk #
+        self.spec_def = poke_evolved.spec_def #
+        self.evolve_lvl = poke_evolved.evolve_lvl
+        self.evolve_id = poke_evolved.evolve_id
+        self.dmg_atked = poke_evolved.dmg_atked
+        # EV = 0.5 -> 1.0 rounded with 1 decimal
+        # self.ev = round(random.uniform(0.5, 1.0),1)
+        # Pokemon when spawning get random lvl 1-5
+        # self.cur_lvl = random.randint(1,5)
+        self.nxt_lvl = self.cur_lvl + 1
+        # Recalculate Attribute when lvl up
+
+        return
+
 # Parsing generated pokemon data
 class pokemonDAO(object):
     def __init__(self, data):
         self.data = data
 
     # Parsing JSON data and return a Pokemon
-    def create_pokemon(self):
+    def create_pokemon(self, cur_lvl):
         id = self.data['id']
         name = self.data['name']
         type = self.data['type']
@@ -86,7 +115,7 @@ class pokemonDAO(object):
         evolve_id = self.data['evolve_id']
         dmg_atked = self.data['dmg_when_atked']
         return pokemon(id, name, type, b_exp, hp, atk, b_def, speed,
-                       spec_atk, spec_def, evolve_lvl, evolve_id, dmg_atked)
+                       spec_atk, spec_def, evolve_lvl, evolve_id, dmg_atked, cur_lvl)
 
 
 # file = open('../data/pokedex.json').read()
