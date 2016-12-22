@@ -2,29 +2,28 @@
 import socket
 import time
 from threading import Thread, Timer
-
-from ord import player
 from ord.pokemon import *
 from ord.player import *
 import random
 import json
+from core.validation import *
 
 # The constant parameters of the PokeCat module
-pokeNum = 13
-worldSz = 1000
-maxPokeNum = 50
-moveDuration = 1
-turnDuration = 120
-spawning_time = 60
-despawning_time = 300
-
 # pokeNum = 13
-# worldSz = 5
-# maxPokeNum = 5
+# worldSz = 1000
+# maxPokeNum = 50
 # moveDuration = 1
-# turnDuration = 5
-# spawning_time = 5
-# despawning_time = 6
+# turnDuration = 120
+# spawning_time = 60
+# despawning_time = 300
+
+pokeNum = 13
+worldSz = 5
+maxPokeNum = 5
+moveDuration = 1
+turnDuration = 10
+spawning_time = 5
+despawning_time = 6
 
 # Binding Server
 server_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -37,7 +36,9 @@ player_world = [[0 for x in range(worldSz)] for y in range(worldSz)]
 # Get all Pokemons Data
 file = open('../../data/pokedex.json').read()
 pokeData = json.loads(file)
-# print data
+
+# New Player List
+new_player_list = []
 
 print "Game server is waiting for connection ..."
 
@@ -59,7 +60,6 @@ def displayPlayer():
 
 	print "\n"
 
-
 def generate_pos():
 	x = random.randint(0, worldSz - 1)
 	y = random.randint(0, worldSz - 1)
@@ -75,7 +75,6 @@ def generate_pokemon():
 	If no one catches it, pokemon will be despawned
 	:return:
 	"""
-
 	global player_world
 	global poke_world
 
@@ -105,29 +104,83 @@ def generate_pokemon():
 	# displayPoke()
 	return
 
+# Update Player list
+def update_player_list(rerun):
+	"""
+	new_list only contains UNIQUE player
+	Rerun = 1 means to update players list every 4 seconds.
+	Rerun = 0 means this funct only run once.
+	:param new_list:
+	:return:
+	"""
+	global new_player_list
+	if rerun == 1:
+		Timer(4, update_player_list, [1]).start()
+	print 'Updating player list.... !'
+	file = '../../data/players.json'
+	with open(file) as readfile:
+		player_list = json.load(readfile)
+	# print player_list
+	curr_index = len(player_list)
+	for item in new_player_list:
+		player = {
+			'username': item[0],
+			'password': item[1],
+			'player_profile': 'player_' + str(curr_index+1) + '.json'
+		}
+		player_list.append(player)
+		curr_index += 1
+		# Remove new_player that has been added
+		new_player_list.remove(item)
+	# Update json data
+	with open(file, 'w') as outfile:
+		json.dump(player_list, outfile, indent=4, sort_keys=True)
+	return player_list
+
 # A class to handle the connection of each player
+
+adr_list = []
+playerThreads = []
+
+generatingThread = Thread(target=generate_pokemon).start()
+updatePlayerListThread = Thread(target=update_player_list, args=(1,)).start()
+
+# Get all Player Data
+file = open('../../data/players.json').read()
+playerData = json.loads(file)
+
 class PlayerHandler(Thread):
 
-	def __init__(self, name, age, address):
+	def __init__(self, username, password, address, index):
 		Thread.__init__(self)
-		self.name = name
-		self.age = age
+
+		self.username = username
+		self.password = password
+		self.adr = address
+		self.index = index
+
+		# Create a class player to store their info for later use (e.g., save to Json)
+		self.player = player(self.username, self.password, [0,0])
+
+		# Has to be set order like this to work correctly !!!!! DONT change anything HERE
+
 		x, y = self.generate_player()
 		self.x = x
 		self.y = y
-		self.adr = address
-		# Create a class player to store their info for later use (e.g., save to Json)
-		self.player = player(self.name, self.age, [self.x, self.y])
+
+		self.player.location = [self.x, self.y]
+
 		self.done = False
 
 	def run(self):
 
 		global server_socket
+		global playerData
 
 		print "Start moving"
 
 		# Automove the player to catch pokemon
-		displayPlayer()
+		# displayPlayer()
 		self.automove(0)
 
         # End the current session of the client after 120 seconds
@@ -136,7 +189,18 @@ class PlayerHandler(Thread):
 
 		print "End moving"
 
-		# playerDAO(self.player).saveToJson()
+		if self.index != -1:
+			playerDAO(self.player).updateToJson(self.index)
+		else:
+			temp_list = update_player_list(0)
+			# print '++++++++++++++++', temp_list
+			for user in temp_list:
+				if user['username'] == username:
+					print username, 'login'
+					temp_link = user['player_profile']
+					temp_link = temp_link[0: temp_link.index('.')]
+					self.index = int(temp_link.split('_')[1])
+			playerDAO(self.player).saveToJson(self.index)
 		server_socket.sendto("q", self.adr)
 
 		return
@@ -162,7 +226,7 @@ class PlayerHandler(Thread):
 		newX = self.x
 		newY = self.y
 
-		status = "Player " + self.name + " "
+		status = "Player " + self.username + " "
 		direction = ""
 
 		while player_world[newX][newY] != 0:
@@ -200,7 +264,7 @@ class PlayerHandler(Thread):
 
 		# print option
 		status += direction
-		print status
+		# print status
 		# Send the moving information back to the current client
 		server_socket.sendto(status, self.adr)
 
@@ -211,14 +275,13 @@ class PlayerHandler(Thread):
 		player_world[oldX][oldY] = 0
 		player_world[self.x][self.y] = 1
 
-		displayPlayer()
+		# displayPlayer()
 
         # Catch a pokemon if found
 		if poke_world[self.x][self.y] != 0:
 			index = poke_world[self.x][self.y]
 			self.catch_pokemon(index)
 			poke_world[self.x][self.y] = 0
-
 
 	def generate_player(self):
 		"""
@@ -252,35 +315,66 @@ class PlayerHandler(Thread):
 
 		global pokeData
 		global server_socket
-
-		poke_a = pokemonDAO(pokeData[index - 1]).create_pokemon()
-		status = "Player " + self.name + " just caught " + poke_a.name
+		poke_lvl = random.randint(1,10)
+		poke_a = pokemonDAO(pokeData[index - 1]).create_pokemon(poke_lvl)
+		status = "Player " + self.username + " just caught " + poke_a.name
 		print status
 		# Send the name of caught pokemon to client
 		server_socket.sendto(status, self.adr)
 		self.player.add_pokemon(poke_a)
 		return
 
-
-adr_list = []
-playerThreads = []
-
-generatingThread = Thread(target=generate_pokemon).start()
-
+# MAIN GAME
 while 1:
 	# Player joined
+	user_index = -1
 	data, address = server_socket.recvfrom(256)
+	temp = data.split('-')
 	# If new player
-	if address not in adr_list:
-		if 'Connect' in data:
-			temp = data.split('-')
+	# if address not in adr_list:
+	if 'Connect' in data:
+		check_connect = False
+		username = temp[1]
+		password = temp[2]
+		for user in playerData:
+			if user['username'] == username:
+				if user['password'] == password:
+					print username, 'login'
+					temp_link = user['player_profile']
+					temp_link = temp_link[0: temp_link.index('.')]
+					user_index = int(temp_link.split('_')[1])
+					server_socket.sendto('proceed', address)
+					check_connect = not check_connect
+					break
+				else:
+					continue
+		if check_connect == False:
+			server_socket.sendto('error', address)
+			continue
+	elif 'Register' in data:
+		check_register = False
+		username = temp[1]
+		password = temp[2]
+		# curr_index = len(playerData) # Retrieve curr_index for player_list
+		for user in playerData:
+			if user['username'] == username: # username is not unique
+				print 'Username is not unique !'
+				server_socket.sendto('error', address)
+				check_register = not check_register
+				break
+		# print check_register
+		if check_register == False:
+			print username, 'registered'
+			new_player_list.append([username, password])
+			server_socket.sendto('proceed', address)
+		else:
+			continue
 
-		# Address will now have the new player
-		adr_list.append(address)
-
-		player_thread = PlayerHandler(temp[1], temp[2], address)
-		player_thread.start()
-		playerThreads.append(player_thread)
+	# Address will now have the new player
+	adr_list.append(address)
+	player_thread = PlayerHandler(temp[1], temp[2], address, user_index)
+	player_thread.start()
+	# playerThreads.append(player_thread)
 
 	# print adr_list.keys()
 	print "(",address[0]," ", address[1],") said: ",data

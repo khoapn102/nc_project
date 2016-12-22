@@ -72,9 +72,6 @@ class pokemon(object):
         self.type = poke_evolved.type
         # Base exp that Pokemon yield after defeated
         self.b_exp = poke_evolved.b_exp
-        # Current Experience of Pokemon
-
-        # Amount Exp Pokemon need to lvl up
 
         self.hp = poke_evolved.hp #
         self.atk = poke_evolved.atk #
@@ -85,12 +82,8 @@ class pokemon(object):
         self.evolve_lvl = poke_evolved.evolve_lvl
         self.evolve_id = poke_evolved.evolve_id
         self.dmg_atked = poke_evolved.dmg_atked
-        # EV = 0.5 -> 1.0 rounded with 1 decimal
-        # self.ev = round(random.uniform(0.5, 1.0),1)
-        # Pokemon when spawning get random lvl 1-5
-        # self.cur_lvl = random.randint(1,5)
+
         self.nxt_lvl = self.cur_lvl + 1
-        # Recalculate Attribute when lvl up
 
         return
 

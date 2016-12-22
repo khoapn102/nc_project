@@ -1,3 +1,7 @@
 [
-
+    {
+        "password": "123abc", 
+        "player_profile": "player_1.json", 
+        "username": "k"
+    }
 ]
