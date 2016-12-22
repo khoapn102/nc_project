@@ -16,6 +16,7 @@ from core.validation import *
 # turnDuration = 120
 # spawning_time = 60
 # despawning_time = 300
+update_player_time = 2
 
 pokeNum = 13
 worldSz = 5
@@ -37,10 +38,12 @@ player_world = [[0 for x in range(worldSz)] for y in range(worldSz)]
 file = open('../../data/pokedex.json').read()
 pokeData = json.loads(file)
 
+playerData = []
+
 # New Player List
 new_player_list = []
 
-print "Game server is waiting for connection ..."
+print "\nGame server is waiting for connection ...\n"
 
 def displayPoke():
 	global poke_world
@@ -114,8 +117,7 @@ def update_player_list(rerun):
 	:return:
 	"""
 	global new_player_list
-	if rerun == 1:
-		Timer(4, update_player_list, [1]).start()
+
 	print 'Updating player list.... !'
 	file = '../../data/players.json'
 	with open(file) as readfile:
@@ -135,20 +137,11 @@ def update_player_list(rerun):
 	# Update json data
 	with open(file, 'w') as outfile:
 		json.dump(player_list, outfile, indent=4, sort_keys=True)
+	if rerun == 1:
+		Timer(update_player_time, update_player_list, [1]).start()
 	return player_list
 
 # A class to handle the connection of each player
-
-adr_list = []
-playerThreads = []
-
-generatingThread = Thread(target=generate_pokemon).start()
-updatePlayerListThread = Thread(target=update_player_list, args=(1,)).start()
-
-# Get all Player Data
-file = open('../../data/players.json').read()
-playerData = json.loads(file)
-
 class PlayerHandler(Thread):
 
 	def __init__(self, username, password, address, index):
@@ -324,11 +317,26 @@ class PlayerHandler(Thread):
 		self.player.add_pokemon(poke_a)
 		return
 
+
+adr_list = []
+playerThreads = []
+
+generatingThread = Thread(target=generate_pokemon).start()
+updatePlayerListThread = Thread(target=update_player_list, args=(1,)).start()
+
+
 # MAIN GAME
 while 1:
-	# Player joined
+
 	user_index = -1
 	data, address = server_socket.recvfrom(256)
+
+	# Get all Player Data
+	file = open('../../data/players.json').read()
+	playerData = json.loads(file)
+
+	print playerData
+
 	temp = data.split('-')
 	# If new player
 	# if address not in adr_list:
@@ -356,6 +364,7 @@ while 1:
 		username = temp[1]
 		password = temp[2]
 		# curr_index = len(playerData) # Retrieve curr_index for player_list
+		# print '+++++++++', playerData
 		for user in playerData:
 			if user['username'] == username: # username is not unique
 				print 'Username is not unique !'
