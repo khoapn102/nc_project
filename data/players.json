@@ -3,5 +3,10 @@
         "password": "123abc", 
         "player_profile": "player_1.json", 
         "username": "k"
+    }, 
+    {
+        "password": "123", 
+        "player_profile": "player_2.json", 
+        "username": "triet"
     }
 ]

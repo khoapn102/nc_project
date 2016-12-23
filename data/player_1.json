@@ -6,7 +6,7 @@
             "b_def": 473560026117.5, 
             "b_exp": 236, 
             "cur_lvl": 36, 
-            "curr_exp": 2439541424128, 
+            "curr_exp": 2439541424128,
             "dmg_atked": [
                 {
                     "multiply": 2, 
@@ -921,6 +921,136 @@
             "speed": 100, 
             "type": [
                 "fire"
+            ]
+        }, 
+        {
+            "accum_exp": 3776, 
+            "atk": 537.3, 
+            "b_def": 544.0, 
+            "b_exp": 236, 
+            "cur_lvl": 5, 
+            "curr_exp": 0, 
+            "dmg_atked": [
+                {
+                    "multiply": 2, 
+                    "type": "flying"
+                }, 
+                {
+                    "multiply": 2, 
+                    "type": "psychic"
+                }, 
+                {
+                    "multiply": 2, 
+                    "type": "fire"
+                }, 
+                {
+                    "multiply": 2, 
+                    "type": "ground"
+                }, 
+                {
+                    "multiply": 2, 
+                    "type": "ice"
+                }, 
+                {
+                    "multiply": 0.5, 
+                    "type": "fairy"
+                }, 
+                {
+                    "multiply": 0.5, 
+                    "type": "fighting"
+                }, 
+                {
+                    "multiply": 0.5, 
+                    "type": "electric"
+                }, 
+                {
+                    "multiply": 0.5, 
+                    "type": "water"
+                }, 
+                {
+                    "multiply": 0.25, 
+                    "type": "grass"
+                }
+            ], 
+            "ev": 0.6, 
+            "evolve_id": 0, 
+            "evolve_lvl": 0, 
+            "hp": 524.3, 
+            "id": 3, 
+            "is_new": false, 
+            "name": "venusaur", 
+            "nxt_lvl": 6, 
+            "spec_atk": 655.4, 
+            "spec_def": 655.4, 
+            "speed": 80, 
+            "type": [
+                "grass", 
+                "poison"
+            ]
+        }, 
+        {
+            "accum_exp": 1024, 
+            "atk": 409.2, 
+            "b_def": 409.2, 
+            "b_exp": 64, 
+            "cur_lvl": 5, 
+            "curr_exp": 0, 
+            "dmg_atked": [
+                {
+                    "multiply": 2, 
+                    "type": "flying"
+                }, 
+                {
+                    "multiply": 2, 
+                    "type": "psychic"
+                }, 
+                {
+                    "multiply": 2, 
+                    "type": "fire"
+                }, 
+                {
+                    "multiply": 2, 
+                    "type": "ground"
+                }, 
+                {
+                    "multiply": 2, 
+                    "type": "ice"
+                }, 
+                {
+                    "multiply": 0.5, 
+                    "type": "fairy"
+                }, 
+                {
+                    "multiply": 0.5, 
+                    "type": "fighting"
+                }, 
+                {
+                    "multiply": 0.5, 
+                    "type": "electric"
+                }, 
+                {
+                    "multiply": 0.5, 
+                    "type": "water"
+                }, 
+                {
+                    "multiply": 0.25, 
+                    "type": "grass"
+                }
+            ], 
+            "ev": 0.7, 
+            "evolve_id": 2, 
+            "evolve_lvl": 16, 
+            "hp": 375.7, 
+            "id": 1, 
+            "is_new": false, 
+            "name": "bulbasaur", 
+            "nxt_lvl": 6, 
+            "spec_atk": 542.8, 
+            "spec_def": 542.8, 
+            "speed": 45, 
+            "type": [
+                "grass", 
+                "poison"
             ]
         }
     ], 

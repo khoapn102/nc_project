@@ -1,0 +1,136 @@
+{
+    "player_bag": [
+        {
+            "accum_exp": 236, 
+            "atk": 82, 
+            "b_def": 83, 
+            "b_exp": 236, 
+            "cur_lvl": 1, 
+            "curr_exp": 0, 
+            "dmg_atked": [
+                {
+                    "multiply": 2, 
+                    "type": "flying"
+                }, 
+                {
+                    "multiply": 2, 
+                    "type": "psychic"
+                }, 
+                {
+                    "multiply": 2, 
+                    "type": "fire"
+                }, 
+                {
+                    "multiply": 2, 
+                    "type": "ground"
+                }, 
+                {
+                    "multiply": 2, 
+                    "type": "ice"
+                }, 
+                {
+                    "multiply": 0.5, 
+                    "type": "fairy"
+                }, 
+                {
+                    "multiply": 0.5, 
+                    "type": "fighting"
+                }, 
+                {
+                    "multiply": 0.5, 
+                    "type": "electric"
+                }, 
+                {
+                    "multiply": 0.5, 
+                    "type": "water"
+                }, 
+                {
+                    "multiply": 0.25, 
+                    "type": "grass"
+                }
+            ], 
+            "ev": 0.9, 
+            "evolve_id": 0, 
+            "evolve_lvl": 0, 
+            "hp": 80, 
+            "id": 3, 
+            "is_new": false, 
+            "name": "venusaur", 
+            "nxt_lvl": 2, 
+            "spec_atk": 100, 
+            "spec_def": 100, 
+            "speed": 80, 
+            "type": [
+                "grass", 
+                "poison"
+            ]
+        }, 
+        {
+            "accum_exp": 30208, 
+            "atk": 1401.3, 
+            "b_def": 1418.7, 
+            "b_exp": 236, 
+            "cur_lvl": 8, 
+            "curr_exp": 0, 
+            "dmg_atked": [
+                {
+                    "multiply": 2, 
+                    "type": "flying"
+                }, 
+                {
+                    "multiply": 2, 
+                    "type": "psychic"
+                }, 
+                {
+                    "multiply": 2, 
+                    "type": "fire"
+                }, 
+                {
+                    "multiply": 2, 
+                    "type": "ground"
+                }, 
+                {
+                    "multiply": 2, 
+                    "type": "ice"
+                }, 
+                {
+                    "multiply": 0.5, 
+                    "type": "fairy"
+                }, 
+                {
+                    "multiply": 0.5, 
+                    "type": "fighting"
+                }, 
+                {
+                    "multiply": 0.5, 
+                    "type": "electric"
+                }, 
+                {
+                    "multiply": 0.5, 
+                    "type": "water"
+                }, 
+                {
+                    "multiply": 0.25, 
+                    "type": "grass"
+                }
+            ], 
+            "ev": 0.5, 
+            "evolve_id": 0, 
+            "evolve_lvl": 0, 
+            "hp": 1366.9, 
+            "id": 3, 
+            "is_new": false, 
+            "name": "venusaur", 
+            "nxt_lvl": 9, 
+            "spec_atk": 1708.9, 
+            "spec_def": 1708.9, 
+            "speed": 80, 
+            "type": [
+                "grass", 
+                "poison"
+            ]
+        }
+    ], 
+    "player_name": "triet", 
+    "player_password": "123"
+}
