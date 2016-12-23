@@ -43,7 +43,7 @@ playerData = []
 # New Player List
 new_player_list = []
 
-print "\nGame server is waiting for connection ...\n"
+print "Pokecat game server is waiting for connection ..."
 
 def displayPoke():
 	global poke_world
@@ -388,5 +388,7 @@ while 1:
 	# print adr_list.keys()
 	print "(",address[0]," ", address[1],") said: ",data
 
+for t in playerThreads:
+	t.join()
 generatingThread.join()
 server_socket.close()

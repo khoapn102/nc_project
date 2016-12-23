@@ -40,7 +40,7 @@ while 1:
 
 	recvData, address = client_socket.recvfrom(1024)
 
-	if(recvData.lower() == 'q'):
+	if recvData.lower() == 'q':
 		print "End the current session Pokecat game"
 		print "Thank you for playing"
 		break
