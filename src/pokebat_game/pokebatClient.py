@@ -208,7 +208,8 @@ def destroy_pokemon():
             poke_a = pokemon.copy()
             # temp_bag.remove(poke_a)
             break
-    print '++++++++++', poke_a
+
+    print '++++++++++', poke_a['name'], poke_a['curr_exp']
 
     for pokemon in temp_bag:
         if id_receive == pokemon['id']:
@@ -243,8 +244,12 @@ def destroy_pokemon():
             poke_b['b_def'] = round(poke_b['b_def']*(1+poke_b['ev']), 1)
             poke_b['spec_atk'] = round(poke_b['spec_atk']*(1+poke_b['ev']), 1)
             poke_b['spec_def'] = round(poke_b['spec_def']*(1+poke_b['ev']), 1)
-        print 'Scarified !'
+
+        print 'Sacrified !'
         print '----------', poke_b['name'], poke_b['curr_exp']
+    # else:
+    #     print 'Cant Sacrified'
+    #     return
 
         temp_bag.append(poke_b)
         playerData['player_bag'] = temp_bag
@@ -254,7 +259,8 @@ def destroy_pokemon():
     else:
         print 'Cant Sacrified'
         return
-    print 'Done'
+
+    print 'Done sacrificing'
 
     return
 

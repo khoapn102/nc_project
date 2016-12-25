@@ -164,7 +164,7 @@
             "b_def": 1666.6, 
             "b_exp": 64, 
             "cur_lvl": 7, 
-            "curr_exp": 0, 
+            "curr_exp": 2496, 
             "dmg_atked": [
                 {
                     "multiply": 2, 
@@ -221,54 +221,6 @@
             "type": [
                 "grass", 
                 "poison"
-            ]
-        }, 
-        {
-            "accum_exp": 2496, 
-            "atk": 724.2, 
-            "b_def": 844.4, 
-            "b_exp": 39, 
-            "cur_lvl": 7, 
-            "curr_exp": 0, 
-            "dmg_atked": [
-                {
-                    "multiply": 2, 
-                    "type": "fire"
-                }, 
-                {
-                    "multiply": 2, 
-                    "type": "rock"
-                }, 
-                {
-                    "multiply": 2, 
-                    "type": "flying"
-                }, 
-                {
-                    "multiply": 0.5, 
-                    "type": "grass"
-                }, 
-                {
-                    "multiply": 0.5, 
-                    "type": "ground"
-                }, 
-                {
-                    "multiply": 0.5, 
-                    "type": "fighting"
-                }
-            ], 
-            "ev": 0.7, 
-            "evolve_id": 11, 
-            "evolve_lvl": 7, 
-            "hp": 1085.8, 
-            "id": 10, 
-            "is_new": false, 
-            "name": "caterpie", 
-            "nxt_lvl": 8, 
-            "spec_atk": 483.0, 
-            "spec_def": 483.0, 
-            "speed": 45, 
-            "type": [
-                "bug"
             ]
         }
     ], 

@@ -10,5 +10,9 @@
     <ConfirmationsSetting value="0" id="Add" />
     <ConfirmationsSetting value="0" id="Remove" />
   </component>
+<<<<<<< 94cc28841cd5c238622b581d2f223073f2ee9d34
   <component name="ProjectRootManager" version="2" project-jdk-name="Python 2.7.11 (C:\Python27\python.exe)" project-jdk-type="Python SDK" />
+=======
+  <component name="ProjectRootManager" version="2" project-jdk-name="Python 2.7.11 virtualenv at C:\Users\Triet Le\AppData\Local\Enthought\Canopy" project-jdk-type="Python SDK" />
+>>>>>>> [FIX] Sacrificing Pokemon
 </project>
