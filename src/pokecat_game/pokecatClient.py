@@ -15,7 +15,7 @@ if opt == 1:
 		data = "Connect-"
 		data += username + '-' + password
 		print data
-		client_socket.sendto(data,("localhost", 9000))
+		client_socket.sendto(data,("localhost", 9001))
 		recvData, address = client_socket.recvfrom(1024)
 		if recvData == 'proceed':
 			break
@@ -29,7 +29,7 @@ elif opt == 2:
 		data = "Register-"
 		data += username + '-' + password
 		print data
-		client_socket.sendto(data,("localhost", 9000))
+		client_socket.sendto(data,("localhost", 9001))
 		recvData, address = client_socket.recvfrom(1024)
 		if recvData == 'proceed':
 			break

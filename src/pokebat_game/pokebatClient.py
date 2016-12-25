@@ -13,7 +13,7 @@ while 1:
     password = raw_input('Password: ')
     data = "Connect-"
     data += username + '-' + password
-    print data
+    # print data
     client_socket.sendto(data,("localhost", 9000))
     recvData, address = client_socket.recvfrom(1024)
     if recvData == 'proceed':
@@ -21,13 +21,16 @@ while 1:
         break
     elif recvData == 'error':
         print 'Invalid Login Credential !!!'
+    elif recvData == 'insufficient':
+        print 'You must have at least 3 Pokemons to play.\nPlease catch more in PokeCat !!!'
+        client_socket.close()
+        exit(0)
     elif recvData == "Full":
         print "The game room is currently full. Please come back later"
         client_socket.close()
         exit(0)
 
-
-print "Waiting for the game to start"
+print "Waiting for the other player to start"
 recvData, address = client_socket.recvfrom(1024)
 
 player_json = recvData
@@ -45,7 +48,7 @@ def displayPokemonList(playerBag):
 
     global killedPokemons
 
-    print "List of your pokemons: "
+    print "\nList of your pokemons: "
     for poke in playerBag:
 
         canSelect = True
@@ -61,7 +64,10 @@ def displayPokemonList(playerBag):
             print "Pokemon attributes:"
             print "Accumulated experience:", poke["accum_exp"]
             print "Current level", poke["cur_lvl"]
-            print "Type:", poke["type"]
+            print "Type:",
+            for pokeType in poke["type"]:
+                print pokeType,
+            print
             print "HP:", poke["hp"]
             print "Attack:", poke["atk"]
             print "Defense:", poke["b_def"]
@@ -70,9 +76,20 @@ def displayPokemonList(playerBag):
             print "\n"
     return
 
+def validatePokeID(pokeid):
+    global playerData
+    for poke in playerData["player_bag"]:
+        if str(poke["id"]) == str(pokeid):
+            return True
+    return False
+
 while len(selectedPokemons) < 3:
     displayPokemonList(pokeList)
     pokeid = raw_input("Please select your pokemon by id: ")
+
+    while not validatePokeID(pokeid):
+        pokeid = raw_input("Please re-select your pokemon by id: ")
+
     selectedPokemons.append(pokeid)
     # print len(pokeList)
 
@@ -81,15 +98,20 @@ while len(selectedPokemons) < 3:
         if str(poke["id"]) == str(pokeid):
             pokeList.remove(poke)
             break
-    # print len(pokeList)
 
 curpoke = selectedPokemons[0]
 data = "-".join(selectedPokemons)
-print data
+
+print "You have selected 3 pokemons:",
+for poke in selectedPokemons:
+    print poke,
+
+print "\n"
+# print data
 client_socket.sendto(data, ("localhost", 9000))
 
 recvData, address = client_socket.recvfrom(1024)
-print "Turn", recvData
+# print "Turn", recvData
 
 # Turn:
 # 0: My turn
@@ -209,7 +231,7 @@ def destroy_pokemon():
             # temp_bag.remove(poke_a)
             break
 
-    print '++++++++++', poke_a['name'], poke_a['curr_exp']
+    print "You have selected", poke_a['name'], poke_a['curr_exp'], "to sacrifice"
 
     for pokemon in temp_bag:
         if id_receive == pokemon['id']:
@@ -217,7 +239,7 @@ def destroy_pokemon():
             # temp_bag.remove(poke_b)
             break
 
-    print '----------', poke_b['name'], poke_b['curr_exp']
+    print 'You have selected', poke_b['name'], poke_b['curr_exp'], "to boost"
 
     check = False
 
@@ -231,13 +253,11 @@ def destroy_pokemon():
         temp_bag.remove(poke_b)
         given_exp = poke_a['accum_exp']
         poke_b['curr_exp'] += given_exp
-        lvl_up_amt = 0
-        if poke_b['curr_exp'] > poke_b['accum_exp']:
-            lvl_up_amt = poke_b['curr_exp']/poke_b['accum_exp']
-            poke_b['curr_exp'] %= poke_b['accum_exp']
-        for i in range(0, lvl_up_amt):
+
+        while float(poke_b['curr_exp']) >= float(poke_b['accum_exp']):
             poke_b['cur_lvl'] += 1
             poke_b['nxt_lvl'] = poke_b['cur_lvl'] + 1
+            poke_b['curr_exp'] -= poke_b['accum_exp']
             poke_b['accum_exp'] *= 2
             poke_b['hp'] = round(poke_b['hp']*(1+poke_b['ev']), 1)
             poke_b['atk'] = round(poke_b['atk']*(1+poke_b['ev']), 1)
@@ -245,8 +265,8 @@ def destroy_pokemon():
             poke_b['spec_atk'] = round(poke_b['spec_atk']*(1+poke_b['ev']), 1)
             poke_b['spec_def'] = round(poke_b['spec_def']*(1+poke_b['ev']), 1)
 
-        print 'Sacrified !'
-        print '----------', poke_b['name'], poke_b['curr_exp']
+        # print 'Sacrified !'
+        # print '----------', poke_b['name'], poke_b['curr_exp']
     # else:
     #     print 'Cant Sacrified'
     #     return
@@ -255,9 +275,8 @@ def destroy_pokemon():
         playerData['player_bag'] = temp_bag
         with open(player_json, 'w') as outfile:
             json.dump(playerData, outfile, indent=4, sort_keys=True)
-
     else:
-        print 'Cant Sacrified'
+        print 'Cannot make sacrifice'
         return
 
     print 'Done sacrificing'
@@ -273,7 +292,6 @@ while 1:
         answer = raw_input('Do you want to destroy a pokemon to level up your fighting pokemons ? (y/n)')
 
         if answer == 'y':
-
             destroy_pokemon()
 
         status = displayMenu()

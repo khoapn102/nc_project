@@ -1,219 +1,319 @@
 {
     "player_bag": [
         {
-            "accum_exp": 4096, 
-            "atk": 248.1, 
-            "b_def": 248.1, 
-            "b_exp": 64, 
-            "cur_lvl": 5, 
-            "curr_exp": 3296, 
+            "accum_exp": 2976,
+            "atk": 622.6,
+            "b_def": 557.1,
+            "b_exp": 186,
+            "cur_lvl": 5,
+            "curr_exp": 1046,
             "dmg_atked": [
                 {
-                    "multiply": 2, 
-                    "type": "flying"
-                }, 
+                    "multiply": 4,
+                    "type": "bug"
+                },
                 {
-                    "multiply": 2, 
-                    "type": "psychic"
-                }, 
+                    "multiply": 2,
+                    "type": "plying"
+                },
                 {
-                    "multiply": 2, 
+                    "multiply": 2,
                     "type": "fire"
-                }, 
+                },
                 {
-                    "multiply": 2, 
-                    "type": "ground"
-                }, 
+                    "multiply": 2,
+                    "type": "poison"
+                },
                 {
-                    "multiply": 2, 
+                    "multiply": 2,
                     "type": "ice"
-                }, 
+                },
                 {
-                    "multiply": 0.5, 
-                    "type": "fairy"
-                }, 
+                    "multiply": 2,
+                    "type": "ghost"
+                },
                 {
-                    "multiply": 0.5, 
-                    "type": "fighting"
-                }, 
+                    "multiply": 2,
+                    "type": "dragon"
+                },
                 {
-                    "multiply": 0.5, 
+                    "multiply": 0.5,
                     "type": "electric"
-                }, 
+                },
                 {
-                    "multiply": 0.5, 
+                    "multiply": 0.5,
                     "type": "water"
-                }, 
+                },
                 {
-                    "multiply": 0.25, 
+                    "multiply": 0.5,
+                    "type": "fighting"
+                },
+                {
+                    "multiply": 0.5,
+                    "type": "psychic"
+                },
+                {
+                    "multiply": 0.5,
                     "type": "grass"
                 }
-            ], 
-            "ev": 0.5, 
-            "evolve_id": 2, 
-            "evolve_lvl": 16, 
-            "hp": 227.9, 
-            "id": 1, 
-            "is_new": false, 
-            "name": "bulbasaur", 
-            "nxt_lvl": 6, 
-            "spec_atk": 329.3, 
-            "spec_def": 329.3, 
-            "speed": 45, 
+            ],
+            "ev": 0.6,
+            "evolve_id": 0,
+            "evolve_lvl": 0,
+            "hp": 622.6,
+            "id": 103,
+            "is_new": false,
+            "name": "Exeggutor",
+            "nxt_lvl": 6,
+            "spec_atk": 819.2,
+            "spec_def": 425.9,
+            "speed": 55,
             "type": [
-                "grass", 
+                "psychic",
+                "grass"
+            ]
+        },
+        {
+            "accum_exp": 1136,
+            "atk": 521.4,
+            "b_def": 1303.2,
+            "b_exp": 71,
+            "cur_lvl": 5,
+            "curr_exp": 1046,
+            "dmg_atked": [
+                {
+                    "multiply": 4,
+                    "type": "grass"
+                },
+                {
+                    "multiply": 2,
+                    "type": "fighting"
+                },
+                {
+                    "multiply": 2,
+                    "type": "ground"
+                },
+                {
+                    "multiply": 2,
+                    "type": "electric"
+                },
+                {
+                    "multiply": 0.5,
+                    "type": "normal"
+                },
+                {
+                    "multiply": 0.5,
+                    "type": "flying"
+                },
+                {
+                    "multiply": 0.5,
+                    "type": "poison"
+                },
+                {
+                    "multiply": 0.5,
+                    "type": "ice"
+                },
+                {
+                    "multiply": 0.25,
+                    "type": "ghost"
+                }
+            ],
+            "ev": 0.9,
+            "evolve_id": 139,
+            "evolve_lvl": 40,
+            "hp": 456.0,
+            "id": 138,
+            "is_new": false,
+            "name": "Omanyte",
+            "nxt_lvl": 6,
+            "spec_atk": 1172.9,
+            "spec_def": 716.5,
+            "speed": 35,
+            "type": [
+                "water",
+                "rock"
+            ]
+        },
+        {
+            "accum_exp": 764,
+            "atk": 379.0,
+            "b_def": 234.6,
+            "b_exp": 191,
+            "cur_lvl": 3,
+            "curr_exp": 473,
+            "dmg_atked": [
+                {
+                    "multiply": 2,
+                    "type": "flying"
+                },
+                {
+                    "multiply": 2,
+                    "type": "psychic"
+                },
+                {
+                    "multiply": 2,
+                    "type": "fire"
+                },
+                {
+                    "multiply": 2,
+                    "type": "ground"
+                },
+                {
+                    "multiply": 2,
+                    "type": "ice"
+                },
+                {
+                    "multiply": 0.5,
+                    "type": "fairy"
+                },
+                {
+                    "multiply": 0.5,
+                    "type": "fighting"
+                },
+                {
+                    "multiply": 0.5,
+                    "type": "electric"
+                },
+                {
+                    "multiply": 0.5,
+                    "type": "water"
+                },
+                {
+                    "multiply": 0.25,
+                    "type": "grass"
+                }
+            ],
+            "ev": 0.9,
+            "evolve_id": 0,
+            "evolve_lvl": 0,
+            "hp": 288.8,
+            "id": 71,
+            "is_new": false,
+            "name": "victreebel",
+            "nxt_lvl": 4,
+            "spec_atk": 361.0,
+            "spec_def": 216.6,
+            "speed": 70,
+            "type": [
+                "grass",
                 "poison"
             ]
-        }, 
+        },
         {
-            "accum_exp": 15360, 
-            "atk": 126.0, 
-            "b_def": 117.0, 
-            "b_exp": 240, 
-            "cur_lvl": 2, 
-            "curr_exp": 2944, 
+            "accum_exp": 1320,
+            "atk": 450.6,
+            "b_def": 286.7,
+            "b_exp": 165,
+            "cur_lvl": 4,
+            "curr_exp": 0,
             "dmg_atked": [
                 {
-                    "multiply": 2, 
-                    "type": "water"
-                }, 
-                {
-                    "multiply": 2, 
+                    "multiply": 2,
                     "type": "rock"
-                }, 
+                },
                 {
-                    "multiply": 2, 
-                    "type": "ground"
-                }, 
-                {
-                    "multiply": 0.5, 
-                    "type": "fairy"
-                }, 
-                {
-                    "multiply": 0.5, 
-                    "type": "ice"
-                }, 
-                {
-                    "multiply": 0.5, 
-                    "type": "fire"
-                }, 
-                {
-                    "multiply": 0.5, 
-                    "type": "steel"
-                }
-            ], 
-            "ev": 0.5, 
-            "evolve_id": 0, 
-            "evolve_lvl": 0, 
-            "hp": 117.0, 
-            "id": 6, 
-            "is_new": false, 
-            "name": "charizard", 
-            "nxt_lvl": 3, 
-            "spec_atk": 163.5, 
-            "spec_def": 127.5, 
-            "speed": 100, 
-            "type": [
-                "fire"
-            ]
-        }, 
-        {
-            "accum_exp": 4992, 
-            "atk": 805.4, 
-            "b_def": 939.5, 
-            "b_exp": 39, 
-            "cur_lvl": 8, 
-            "curr_exp": 2848, 
-            "dmg_atked": [
-                {
-                    "multiply": 2, 
-                    "type": "fire"
-                }, 
-                {
-                    "multiply": 2, 
-                    "type": "rock"
-                }, 
-                {
-                    "multiply": 2, 
-                    "type": "flying"
-                }, 
-                {
-                    "multiply": 0.5, 
-                    "type": "grass"
-                }, 
-                {
-                    "multiply": 0.5, 
-                    "type": "ground"
-                }, 
-                {
-                    "multiply": 0.5, 
-                    "type": "fighting"
-                }
-            ], 
-            "ev": 0.6, 
-            "evolve_id": 11, 
-            "evolve_lvl": 7, 
-            "hp": 1207.8, 
-            "id": 10, 
-            "is_new": false, 
-            "name": "caterpie", 
-            "nxt_lvl": 9, 
-            "spec_atk": 536.6, 
-            "spec_def": 536.6, 
-            "speed": 45, 
-            "type": [
-                "bug"
-            ]
-        }, 
-        {
-            "accum_exp": 61184, 
-            "atk": 9145.8, 
-            "b_def": 11020.1, 
-            "b_exp": 239, 
-            "cur_lvl": 9, 
-            "curr_exp": 44368, 
-            "dmg_atked": [
-                {
-                    "multiply": 2, 
+                    "multiply": 2,
                     "type": "electric"
-                }, 
+                },
                 {
-                    "multiply": 2, 
-                    "type": "grass"
-                }, 
-                {
-                    "multiply": 0.5, 
+                    "multiply": 2,
                     "type": "ice"
-                }, 
+                },
                 {
-                    "multiply": 0.5, 
-                    "type": "water"
-                }, 
+                    "multiply": 0.5,
+                    "type": "bug"
+                },
                 {
-                    "multiply": 0.5, 
-                    "type": "fire"
-                }, 
+                    "multiply": 0.5,
+                    "type": "grass"
+                },
                 {
-                    "multiply": 0.5, 
-                    "type": "steel"
+                    "multiply": 0,
+                    "type": "ghost"
+                },
+                {
+                    "multiply": 0,
+                    "type": "ground"
                 }
-            ], 
-            "ev": 0.8, 
-            "evolve_id": 0, 
-            "evolve_lvl": 0, 
-            "hp": 8706.6, 
-            "id": 9, 
-            "is_new": false, 
-            "name": "blastoise", 
-            "nxt_lvl": 10, 
-            "spec_atk": 9366.8, 
-            "spec_def": 11571.3, 
-            "speed": 78, 
+            ],
+            "ev": 0.6,
+            "evolve_id": 0,
+            "evolve_lvl": 0,
+            "hp": 245.8,
+            "id": 85,
+            "is_new": false,
+            "name": "dodrio",
+            "nxt_lvl": 5,
+            "spec_atk": 245.8,
+            "spec_def": 245.8,
+            "speed": 100,
             "type": [
-                "water"
+                "flying",
+                "normal"
+            ]
+        },
+        {
+            "accum_exp": 1136,
+            "atk": 524.3,
+            "b_def": 589.8,
+            "b_exp": 71,
+            "cur_lvl": 5,
+            "curr_exp": 0,
+            "dmg_atked": [
+                {
+                    "multiply": 4,
+                    "type": "grass"
+                },
+                {
+                    "multiply": 2,
+                    "type": "fighting"
+                },
+                {
+                    "multiply": 2,
+                    "type": "ground"
+                },
+                {
+                    "multiply": 2,
+                    "type": "electric"
+                },
+                {
+                    "multiply": 0.5,
+                    "type": "normal"
+                },
+                {
+                    "multiply": 0.5,
+                    "type": "flying"
+                },
+                {
+                    "multiply": 0.5,
+                    "type": "poison"
+                },
+                {
+                    "multiply": 0.5,
+                    "type": "ice"
+                },
+                {
+                    "multiply": 0.25,
+                    "type": "fire"
+                }
+            ],
+            "ev": 0.6,
+            "evolve_id": 141,
+            "evolve_lvl": 40,
+            "hp": 196.6,
+            "id": 140,
+            "is_new": false,
+            "name": "Kabuto",
+            "nxt_lvl": 6,
+            "spec_atk": 360.5,
+            "spec_def": 294.9,
+            "speed": 55,
+            "type": [
+                "water",
+                "rock"
             ]
         }
-    ], 
+    ],
     "player_name": "triet", 
     "player_password": "123"
 }

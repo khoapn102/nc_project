@@ -1,129 +1,32 @@
 {
     "player_bag": [
         {
-            "accum_exp": 39, 
-            "atk": 35, 
-            "b_def": 30, 
-            "b_exp": 39, 
+            "accum_exp": 163, 
+            "atk": 60, 
+            "b_def": 95, 
+            "b_exp": 163, 
             "cur_lvl": 1, 
             "curr_exp": 0, 
             "dmg_atked": [
                 {
-                    "multiply": 2, 
-                    "type": "fire"
-                }, 
-                {
-                    "multiply": 2, 
-                    "type": "rock"
-                }, 
-                {
-                    "multiply": 2, 
-                    "type": "flying"
-                }, 
-                {
-                    "multiply": 2, 
-                    "type": "psychic"
-                }, 
-                {
-                    "multiply": 0.5, 
-                    "type": "fairy"
-                }
-            ], 
-            "ev": 0.8, 
-            "evolve_id": 14, 
-            "evolve_lvl": 7, 
-            "hp": 40, 
-            "id": 13, 
-            "is_new": false, 
-            "name": "weedle", 
-            "nxt_lvl": 2, 
-            "spec_atk": 20, 
-            "spec_def": 20, 
-            "speed": 50, 
-            "type": [
-                "bug", 
-                "poison"
-            ]
-        }, 
-        {
-            "accum_exp": 9088, 
-            "atk": 2176.9, 
-            "b_def": 1972.4, 
-            "b_exp": 142, 
-            "cur_lvl": 7, 
-            "curr_exp": 0, 
-            "dmg_atked": [
-                {
-                    "multiply": 2, 
-                    "type": "water"
-                }, 
-                {
-                    "multiply": 2, 
-                    "type": "rock"
-                }, 
-                {
-                    "multiply": 2, 
+                    "multiply": 4, 
                     "type": "ground"
                 }, 
                 {
-                    "multiply": 0.5, 
-                    "type": "fairy"
+                    "multiply": 2, 
+                    "type": "fighting"
                 }, 
                 {
-                    "multiply": 0.5, 
-                    "type": "ice"
-                }, 
-                {
-                    "multiply": 0.5, 
+                    "multiply": 2, 
                     "type": "fire"
                 }, 
                 {
                     "multiply": 0.5, 
-                    "type": "steel"
-                }
-            ], 
-            "ev": 0.8, 
-            "evolve_id": 6, 
-            "evolve_lvl": 36, 
-            "hp": 1972.4, 
-            "id": 5, 
-            "is_new": false, 
-            "name": "charmeleon", 
-            "nxt_lvl": 8, 
-            "spec_atk": 2721.2, 
-            "spec_def": 2210.9, 
-            "speed": 80, 
-            "type": [
-                "fire"
-            ]
-        }, 
-        {
-            "accum_exp": 1424, 
-            "atk": 184.3, 
-            "b_def": 204.8, 
-            "b_exp": 178, 
-            "cur_lvl": 4, 
-            "curr_exp": 0, 
-            "dmg_atked": [
+                    "type": "normal"
+                }, 
                 {
-                    "multiply": 4, 
+                    "multiply": 0.5, 
                     "type": "rock"
-                }, 
-                {
-                    "multiply": 2, 
-                    "type": "fire"
-                }, 
-                {
-                    "multiply": 2, 
-                    "type": "flying"
-                }, 
-                {
-                    "multiply": 2, 
-                    "type": "ice"
-                }, 
-                {
-                    "multiply": 2, 
-                    "type": "electric"
                 }, 
                 {
                     "multiply": 0.5, 
@@ -135,36 +38,60 @@
                 }, 
                 {
                     "multiply": 0.5, 
-                    "type": "ground"
+                    "type": "psychic"
                 }, 
                 {
                     "multiply": 0.5, 
-                    "type": "fighting"
+                    "type": "ice"
+                }, 
+                {
+                    "multiply": 0.5, 
+                    "type": "dragon"
+                }, 
+                {
+                    "multiply": 0.5, 
+                    "type": "fairy"
+                }, 
+                {
+                    "multiply": 0.5, 
+                    "type": "electric"
+                }, 
+                {
+                    "multiply": 0.25, 
+                    "type": "flying"
+                }, 
+                {
+                    "multiply": 0.25, 
+                    "type": "steel"
+                }, 
+                {
+                    "multiply": 0, 
+                    "type": "poison"
                 }
             ], 
             "ev": 0.6, 
             "evolve_id": 0, 
             "evolve_lvl": 0, 
-            "hp": 245.8, 
-            "id": 12, 
+            "hp": 50, 
+            "id": 82, 
             "is_new": false, 
-            "name": "butterfree", 
-            "nxt_lvl": 5, 
-            "spec_atk": 368.6, 
-            "spec_def": 327.7, 
+            "name": "magneton", 
+            "nxt_lvl": 2, 
+            "spec_atk": 120, 
+            "spec_def": 70, 
             "speed": 70, 
             "type": [
-                "bug", 
-                "flying"
+                "electric", 
+                "steel"
             ]
         }, 
         {
-            "accum_exp": 4096, 
-            "atk": 1666.6, 
-            "b_def": 1666.6, 
-            "b_exp": 64, 
-            "cur_lvl": 7, 
-            "curr_exp": 2496, 
+            "accum_exp": 656, 
+            "atk": 417.7, 
+            "b_def": 270.1, 
+            "b_exp": 82, 
+            "cur_lvl": 4, 
+            "curr_exp": 0, 
             "dmg_atked": [
                 {
                     "multiply": 2, 
@@ -207,19 +134,146 @@
                     "type": "grass"
                 }
             ], 
-            "ev": 0.8, 
-            "evolve_id": 2, 
-            "evolve_lvl": 16, 
-            "hp": 1530.2, 
-            "id": 1, 
+            "ev": 0.7, 
+            "evolve_id": 78, 
+            "evolve_lvl": 40, 
+            "hp": 245.7, 
+            "id": 77, 
             "is_new": false, 
-            "name": "bulbasaur", 
-            "nxt_lvl": 8, 
-            "spec_atk": 2210.9, 
-            "spec_def": 2210.9, 
-            "speed": 45, 
+            "name": "ponyta", 
+            "nxt_lvl": 5, 
+            "spec_atk": 319.3, 
+            "spec_def": 319.3, 
+            "speed": 90, 
             "type": [
-                "grass", 
+                "fire"
+            ]
+        }, 
+        {
+            "accum_exp": 2320, 
+            "atk": 177.3, 
+            "b_def": 151.9, 
+            "b_exp": 145, 
+            "cur_lvl": 5, 
+            "curr_exp": 0, 
+            "dmg_atked": [
+                {
+                    "multiply": 2, 
+                    "type": "bug"
+                }, 
+                {
+                    "multiply": 2, 
+                    "type": "ghost"
+                }, 
+                {
+                    "multiply": 2, 
+                    "type": "dark"
+                }, 
+                {
+                    "multiply": 0.5, 
+                    "type": "fighting"
+                }, 
+                {
+                    "multiply": 0.5, 
+                    "type": "psychic"
+                }
+            ], 
+            "ev": 0.5, 
+            "evolve_id": 65, 
+            "evolve_lvl": 55, 
+            "hp": 202.5, 
+            "id": 64, 
+            "is_new": false, 
+            "name": "kadabra", 
+            "nxt_lvl": 6, 
+            "spec_atk": 607.5, 
+            "spec_def": 354.5, 
+            "speed": 105, 
+            "type": [
+                "psychic"
+            ]
+        }, 
+        {
+            "accum_exp": 172, 
+            "atk": 95, 
+            "b_def": 80, 
+            "b_exp": 172, 
+            "cur_lvl": 1, 
+            "curr_exp": 0, 
+            "dmg_atked": [
+                {
+                    "multiply": 2, 
+                    "type": "fighting"
+                }, 
+                {
+                    "multiply": 0, 
+                    "type": "ghost"
+                }
+            ], 
+            "ev": 0.7, 
+            "evolve_id": 0, 
+            "evolve_lvl": 0, 
+            "hp": 105, 
+            "id": 115, 
+            "is_new": false, 
+            "name": "Kangaskhan", 
+            "nxt_lvl": 2, 
+            "spec_atk": 40, 
+            "spec_def": 80, 
+            "speed": 90, 
+            "type": [
+                "normal"
+            ]
+        }, 
+        {
+            "accum_exp": 220, 
+            "atk": 135.8, 
+            "b_def": 150.3, 
+            "b_exp": 55, 
+            "cur_lvl": 3, 
+            "curr_exp": 0, 
+            "dmg_atked": [
+                {
+                    "multiply": 2, 
+                    "type": "psychic"
+                }, 
+                {
+                    "multiply": 2, 
+                    "type": "ground"
+                }, 
+                {
+                    "multiply": 0.5, 
+                    "type": "fairy"
+                }, 
+                {
+                    "multiply": 0.5, 
+                    "type": "grass"
+                }, 
+                {
+                    "multiply": 0.5, 
+                    "type": "bug"
+                }, 
+                {
+                    "multiply": 0.5, 
+                    "type": "poison"
+                }, 
+                {
+                    "multiply": 0.5, 
+                    "type": "fighting"
+                }
+            ], 
+            "ev": 0.7, 
+            "evolve_id": 30, 
+            "evolve_lvl": 16, 
+            "hp": 158.9, 
+            "id": 29, 
+            "is_new": false, 
+            "name": "nidoran_female", 
+            "nxt_lvl": 4, 
+            "spec_atk": 115.6, 
+            "spec_def": 115.6, 
+            "speed": 41, 
+            "type": [
                 "poison"
             ]
         }

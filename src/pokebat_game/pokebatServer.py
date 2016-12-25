@@ -306,11 +306,10 @@ class PlayerHandler():
         for pokemon in my_bag:
             for another in my_pokeList:
                 if another['id'] == pokemon['id']:
-                    pokemon['curr_exp'] += (total_exp)/3
+                    pokemon['curr_exp'] += (total_exp) / 3
                     if pokemon['curr_exp'] > pokemon['accum_exp']:
-                        lvl_up_amt = pokemon['curr_exp']/pokemon['accum_exp']
-                        pokemon['curr_exp'] %= pokemon['accum_exp']
-                        for i in range(0, lvl_up_amt):
+                        while float(pokemon['curr_exp']) >= float(pokemon['accum_exp']):
+                            pokemon['curr_exp'] -= pokemon['accum_exp']
                             pokemon['accum_exp'] *= 2
                             pokemon['cur_lvl'] += 1
                             pokemon['nxt_lvl'] = pokemon['cur_lvl'] + 1
@@ -338,8 +337,16 @@ def validateLogin(username, password, address):
 
     for user in playerData:
         if user['username'] == username and user['password'] == password:
-            print username, 'login'
             temp_link = user['player_profile']
+
+            playerJson = "../../data/" + user['player_profile']
+            file = open(playerJson).read()
+            if len(json.loads(file)["player_bag"]) < 3:
+                server_socket.sendto('insufficient', address)
+                return ("", False)
+
+            print "Player", username, "logged in"
+
             temp_link = temp_link[0: temp_link.index('.')]
             server_socket.sendto('proceed', address)
             return (user['player_profile'], True)
@@ -428,7 +435,6 @@ while 1:
                 adr_list[address] = p1
         else:
             server_socket.sendto("Waiting", address)
-
 
 for t in collectingThreads:
     t.join()

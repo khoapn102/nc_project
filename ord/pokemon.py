@@ -54,15 +54,18 @@ class pokemon(object):
                 self.spec_def = round(self.spec_def*(1+self.ev), 1)
 
             return
-        if self.curr_exp == self.accum_exp:
+
+        while self.curr_exp >= self.accum_exp:
             self.cur_lvl += 1
-            self.nxt_lvl = self.curr_exp + 1
+            self.nxt_lvl = self.cur_lvl + 1
+            self.curr_exp -= self.accum_exp
             self.accum_exp *= 2
             self.hp = round(self.hp*(1+self.ev), 1)
             self.atk = round(self.atk*(1+self.ev), 1)
             self.b_def = round(self.b_def*(1+self.ev), 1)
             self.spec_atk = round(self.spec_atk*(1+self.ev), 1)
             self.spec_def = round(self.spec_def*(1+self.ev), 1)
+
         return
 
     def evolve(self, data, evolve_id):

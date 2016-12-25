@@ -18,7 +18,7 @@ from core.validation import *
 # despawning_time = 300
 update_player_time = 2
 
-pokeNum = 13
+pokeNum = 150
 worldSz = 5
 maxPokeNum = 5
 moveDuration = 1
@@ -28,7 +28,7 @@ despawning_time = 6
 
 # Binding Server
 server_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-server_socket.bind(("", 9000))
+server_socket.bind(("", 9001))
 
 # Initialize pokeworld - to generate Pokemon
 poke_world = [[0 for x in range(worldSz)] for y in range(worldSz)]
@@ -313,7 +313,7 @@ class PlayerHandler(Thread):
 		global pokeData
 		global server_socket
 
-		poke_lvl = random.randint(1, 10)
+		poke_lvl = random.randint(1, 5)
 		poke_a = pokemonDAO(pokeData[index - 1]).create_pokemon(poke_lvl)
 
 		# print "Pokemon id:", poke_a.id
