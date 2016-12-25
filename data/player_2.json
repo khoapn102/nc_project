@@ -66,54 +66,6 @@
             ]
         }, 
         {
-            "accum_exp": 36352, 
-            "atk": 2706.7, 
-            "b_def": 3436.0, 
-            "b_exp": 142, 
-            "cur_lvl": 9, 
-            "curr_exp": 0, 
-            "dmg_atked": [
-                {
-                    "multiply": 2, 
-                    "type": "electric"
-                }, 
-                {
-                    "multiply": 2, 
-                    "type": "grass"
-                }, 
-                {
-                    "multiply": 0.5, 
-                    "type": "ice"
-                }, 
-                {
-                    "multiply": 0.5, 
-                    "type": "water"
-                }, 
-                {
-                    "multiply": 0.5, 
-                    "type": "fire"
-                }, 
-                {
-                    "multiply": 0.5, 
-                    "type": "steel"
-                }
-            ], 
-            "ev": 0.6, 
-            "evolve_id": 9, 
-            "evolve_lvl": 36, 
-            "hp": 2533.9, 
-            "id": 8, 
-            "is_new": false, 
-            "name": "wartortle", 
-            "nxt_lvl": 10, 
-            "spec_atk": 2790.9, 
-            "spec_def": 3436.0, 
-            "speed": 58, 
-            "type": [
-                "water"
-            ]
-        }, 
-        {
             "accum_exp": 480, 
             "atk": 126.0, 
             "b_def": 117.0, 
@@ -219,7 +171,7 @@
             "b_def": 11020.1, 
             "b_exp": 239, 
             "cur_lvl": 9, 
-            "curr_exp": 0, 
+            "curr_exp": 36352, 
             "dmg_atked": [
                 {
                     "multiply": 2, 

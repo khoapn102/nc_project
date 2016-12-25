@@ -216,7 +216,7 @@ def destroy_pokemon():
             # temp_bag.remove(poke_b)
             break
 
-    print '----------', poke_b['name'], poke_b['cur_exp']
+    print '----------', poke_b['name'], poke_b['curr_exp']
 
     check = False
 
@@ -244,15 +244,16 @@ def destroy_pokemon():
             poke_b['spec_atk'] = round(poke_b['spec_atk']*(1+poke_b['ev']), 1)
             poke_b['spec_def'] = round(poke_b['spec_def']*(1+poke_b['ev']), 1)
         print 'Scarified !'
-        print '----------', poke_b['name'], poke_b['cur_exp']
-    # else:
-    #     print 'Cant Sacrified'
-    #     return
+        print '----------', poke_b['name'], poke_b['curr_exp']
+
         temp_bag.append(poke_b)
         playerData['player_bag'] = temp_bag
         with open(player_json, 'w') as outfile:
             json.dump(playerData, outfile, indent=4, sort_keys=True)
 
+    else:
+        print 'Cant Sacrified'
+        return
     print 'Done'
 
     return
