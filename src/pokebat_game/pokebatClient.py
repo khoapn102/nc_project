@@ -30,6 +30,7 @@ while 1:
 print "Waiting for the game to start"
 recvData, address = client_socket.recvfrom(1024)
 
+player_json = recvData
 # Open the received json file to select 3 pokemons
 file = open(recvData).read()
 playerData = json.loads(file)
@@ -184,11 +185,89 @@ def displayMenu():
                 return "Surrender"
     return ""
 
+def destroy_pokemon():
+    print '--- List of possible pokemon for destroying ----\n'
+    # for pokemon in pokeList:
+    #     print "Pokemon name:", poke["name"]
+    #     print "Pokemon id:", poke["id"]
+    #     print "Accumulated experience:", poke["accum_exp"]
+    #     print "Current level", poke["cur_lvl"]
+    #     print "Type:", poke["type"]
+
+    displayPokemonList(pokeList)
+    id_destroy = int(raw_input('Enter the id of pokemon you want to destroy: '))
+    id_receive = int(raw_input('Enter the id of pokemon you want to give to: '))
+
+    given_exp = 0
+    temp_bag = playerData['player_bag']
+    # print temp_bag
+    poke_a = {}
+    poke_b = {}
+    for pokemon in temp_bag:
+        if id_destroy == pokemon['id']:
+            poke_a = pokemon.copy()
+            # temp_bag.remove(poke_a)
+            break
+    print '++++++++++', poke_a
+
+    for pokemon in temp_bag:
+        if id_receive == pokemon['id']:
+            poke_b = pokemon.copy()
+            # temp_bag.remove(poke_b)
+            break
+
+    print '----------', poke_b['name'], poke_b['cur_exp']
+
+    check = False
+
+    for element in poke_a['type']:
+        if element in poke_b['type']:
+            check = True
+            break
+
+    if check == True:
+        temp_bag.remove(poke_a)
+        temp_bag.remove(poke_b)
+        given_exp = poke_a['accum_exp']
+        poke_b['curr_exp'] += given_exp
+        lvl_up_amt = 0
+        if poke_b['curr_exp'] > poke_b['accum_exp']:
+            lvl_up_amt = poke_b['curr_exp']/poke_b['accum_exp']
+            poke_b['curr_exp'] %= poke_b['accum_exp']
+        for i in range(0, lvl_up_amt):
+            poke_b['cur_lvl'] += 1
+            poke_b['nxt_lvl'] = poke_b['cur_lvl'] + 1
+            poke_b['accum_exp'] *= 2
+            poke_b['hp'] = round(poke_b['hp']*(1+poke_b['ev']), 1)
+            poke_b['atk'] = round(poke_b['atk']*(1+poke_b['ev']), 1)
+            poke_b['b_def'] = round(poke_b['b_def']*(1+poke_b['ev']), 1)
+            poke_b['spec_atk'] = round(poke_b['spec_atk']*(1+poke_b['ev']), 1)
+            poke_b['spec_def'] = round(poke_b['spec_def']*(1+poke_b['ev']), 1)
+        print 'Scarified !'
+        print '----------', poke_b['name'], poke_b['cur_exp']
+    # else:
+    #     print 'Cant Sacrified'
+    #     return
+        temp_bag.append(poke_b)
+        playerData['player_bag'] = temp_bag
+        with open(player_json, 'w') as outfile:
+            json.dump(playerData, outfile, indent=4, sort_keys=True)
+
+    print 'Done'
+
+    return
+
 while 1:
     # Send 'Connect Signal'
     if turn == 0:
 
         print "It's your turn"
+
+        answer = raw_input('Do you want to destroy a pokemon to level up your fighting pokemons ? (y/n)')
+
+        if answer == 'y':
+
+            destroy_pokemon()
 
         status = displayMenu()
 
