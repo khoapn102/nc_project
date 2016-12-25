@@ -88,6 +88,7 @@ def generate_pokemon():
 	count = 0
 	while count < maxPokeNum:
 		# Pokemon random index 1 - 150
+		# index = 1
 		index = random.randint(1, pokeNum)
 		x,y = generate_pos()
 		batch_loc.append((x,y))
@@ -144,7 +145,7 @@ def update_player_list(rerun):
 # A class to handle the connection of each player
 class PlayerHandler(Thread):
 
-	def __init__(self, username, password, address, index):
+	def __init__(self, username, password, address, index, playerbag):
 		Thread.__init__(self)
 
 		self.username = username
@@ -152,8 +153,10 @@ class PlayerHandler(Thread):
 		self.adr = address
 		self.index = index
 
-		# Create a class player to store their info for later use (e.g., save to Json)
-		self.player = player(self.username, self.password, [0,0])
+		self.curBag = playerbag
+
+		 # Create a class player to store their info for later use (e.g., save to Json)
+		self.player = player(self.username, self.password)
 
 		# Has to be set order like this to work correctly !!!!! DONT change anything HERE
 
@@ -273,8 +276,9 @@ class PlayerHandler(Thread):
         # Catch a pokemon if found
 		if poke_world[self.x][self.y] != 0:
 			index = poke_world[self.x][self.y]
-			self.catch_pokemon(index)
-			poke_world[self.x][self.y] = 0
+
+			if self.catch_pokemon(index):
+				poke_world[self.x][self.y] = 0
 
 	def generate_player(self):
 		"""
@@ -291,8 +295,8 @@ class PlayerHandler(Thread):
 
 		if poke_world[x][y] != 0:
 			index = poke_world[x][y]
-			self.catch_pokemon(index)
-			poke_world[x][y] = 0
+			if self.catch_pokemon(index):
+				poke_world[x][y] = 0
 		player_world[x][y] = 1
 
 		return (x, y)  # Return location for new Player
@@ -308,14 +312,28 @@ class PlayerHandler(Thread):
 
 		global pokeData
 		global server_socket
-		poke_lvl = random.randint(1,10)
+
+		poke_lvl = random.randint(1, 10)
 		poke_a = pokemonDAO(pokeData[index - 1]).create_pokemon(poke_lvl)
+
+		# print "Pokemon id:", poke_a.id
+
+		print self.curBag
+
+		for poke in self.curBag:
+			if poke["id"] == poke_a.id:
+				return False
+
+		for poke in self.player.bag:
+			if poke["id"] == poke_a.id:
+				return False
+
 		status = "Player " + self.username + " just caught " + poke_a.name
 		print status
 		# Send the name of caught pokemon to client
 		server_socket.sendto(status, self.adr)
 		self.player.add_pokemon(poke_a)
-		return
+		return True
 
 
 adr_list = []
@@ -338,6 +356,7 @@ while 1:
 	print playerData
 
 	temp = data.split('-')
+	playerbag = []
 	# If new player
 	# if address not in adr_list:
 	if 'Connect' in data:
@@ -349,6 +368,10 @@ while 1:
 				if user['password'] == password:
 					print username, 'login'
 					temp_link = user['player_profile']
+
+					file = open('../../data/' + temp_link).read()
+					playerbag = json.loads(file)["player_bag"]
+
 					temp_link = temp_link[0: temp_link.index('.')]
 					user_index = int(temp_link.split('_')[1])
 					server_socket.sendto('proceed', address)
@@ -381,7 +404,10 @@ while 1:
 
 	# Address will now have the new player
 	adr_list.append(address)
-	player_thread = PlayerHandler(temp[1], temp[2], address, user_index)
+
+	# print "Player bag", playerbag
+
+	player_thread = PlayerHandler(temp[1], temp[2], address, user_index, playerbag)
 	player_thread.start()
 	# playerThreads.append(player_thread)
 
