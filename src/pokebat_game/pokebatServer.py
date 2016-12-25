@@ -23,6 +23,9 @@ class PlayerHandler():
         self.playerjson = "../../data/" + playerjson
 
         self.pokeList = []
+
+        self.pokeList_copy = []
+
         self.speed = -1
 
         self.curpoke = -1
@@ -114,6 +117,8 @@ class PlayerHandler():
             server_socket.sendto("1", self.address)
         else:
             server_socket.sendto("0", self.address)
+
+        self.pokeList_copy = list(self.pokeList)
 
         self.setStatus(3)
         return
@@ -281,6 +286,44 @@ class PlayerHandler():
         return
 
     def processWinning(self):
+        global adr_list
+        global server_socket
+
+        my_pokeList = adr_list[self.address].pokeList_copy
+        opp_pokeList = adr_list[self.opponent].pokeList_copy
+
+        total_exp = 0
+        for pokemon in opp_pokeList:
+            total_exp += pokemon['accum_exp']
+
+        with open(self.playerjson) as readfile:
+            my_data = json.load(readfile)
+
+        # print '++++++++', my_data
+        my_bag = my_data['player_bag']
+
+        # print '+++++++++++++', my_data['player_bag']
+        for pokemon in my_bag:
+            for another in my_pokeList:
+                if another['id'] == pokemon['id']:
+                    pokemon['curr_exp'] += (total_exp)/3
+                    if pokemon['curr_exp'] > pokemon['accum_exp']:
+                        lvl_up_amt = pokemon['curr_exp']/pokemon['accum_exp']
+                        pokemon['curr_exp'] %= pokemon['accum_exp']
+                        for i in range(0, lvl_up_amt):
+                            pokemon['accum_exp'] *= 2
+                            pokemon['cur_lvl'] += 1
+                            pokemon['nxt_lvl'] = pokemon['cur_lvl'] + 1
+                            pokemon['hp'] = round(pokemon['hp']*(1+pokemon['ev']), 1)
+                            pokemon['atk'] = round(pokemon['atk']*(1+pokemon['ev']), 1)
+                            pokemon['b_def'] = round(pokemon['b_def']*(1+pokemon['ev']), 1)
+                            pokemon['spec_atk'] = round(pokemon['spec_atk']*(1+pokemon['ev']), 1)
+                            pokemon['spec_def'] = round(pokemon['spec_def']*(1+pokemon['ev']), 1)
+        my_data['player_bag'] = my_bag
+        # print '=============', my_data['player_bag']
+        with open(self.playerjson, 'w') as outfile:
+            json.dump(my_data, outfile, indent=4, sort_keys=True)
+        print 'Won and EXP awarded to Winner !!!'
         return
 
 def validateLogin(username, password, address):
