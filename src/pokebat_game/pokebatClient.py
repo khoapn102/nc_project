@@ -4,9 +4,6 @@ import json
 # Using UDP
 client_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
-# data = "Connect-Khoa-26"
-# client_socket.sendto(data, ("localhost", 9000))
-
 # Login Credential
 print "Please log in: "
 
@@ -201,7 +198,7 @@ while 1:
             recvData, address = client_socket.recvfrom(1024)
             print recvData
 
-            client_socket.sendto("q", ("localhost", 9000))
+            # client_socket.sendto("q", ("localhost", 9000))
             break
 
         elif "Fight" in status:
@@ -210,7 +207,7 @@ while 1:
             if "Won" in recvData:
                 print recvData.split("\n")[0]
                 print "You just won the PokeBat game."
-                client_socket.sendto("q", ("localhost", 9000))
+                # client_socket.sendto("q", ("localhost", 9000))
                 break
 
             print recvData
@@ -226,7 +223,7 @@ while 1:
 
         if "surrendered" in recvData:
             print recvData
-            client_socket.sendto("q", ("localhost", 9000))
+            # client_socket.sendto("q", ("localhost", 9000))
             break
 
         elif "killed" in recvData:
@@ -239,7 +236,7 @@ while 1:
 
         if "Lost" in recvData:
             print "You just lost the PokeBat game."
-            client_socket.sendto("q", ("localhost", 9000))
+            # client_socket.sendto("q", ("localhost", 9000))
             break
 
     turn = (turn + 1) % 2

@@ -1,9 +1,7 @@
 import socket
 import json
 import random
-from ord import player
-from ord import pokemon
-from threading import Thread
+import threading
 
 # Binding Server
 server_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -13,10 +11,11 @@ print "PokeBat game server is waiting for connection ..."
 
 # playerList = []
 adr_list = {}
+threadList = []
+collectingThreads = []
 
-class PlayerHandler(Thread):
+class PlayerHandler():
     def __init__(self, username, password, address, playerjson):
-        Thread.__init__(self)
         self.username = username
         self.password = password
         self.address = address
@@ -36,41 +35,10 @@ class PlayerHandler(Thread):
         # 1: Choose Pokemon
         # 2: Choose turn
         # 3: Fight, Switch or Surrender
-        # 4: Quit
+        # 4: Processing quitting
+        # 5: Done
         self.status = 0
         self.pokemons = []
-
-    def run(self):
-        while 1:
-            address = self.address
-            data = ""
-
-            if self.status != 0 and self.status != 1:
-                data, address = server_socket.recvfrom(1024)
-                print data
-                if "q-" in data:
-                    if data.split("-")[1] == self.username and self.status == 4:
-                        break
-
-            if address == self.address:
-                if data == "q":
-                    break
-                self.execute(data)
-            elif address == self.opponent:
-                if data == "q":
-                    adr_list[self.opponent].status = 4
-                adr_list[self.opponent].execute(data)
-
-        if self.result == "Won":
-            self.processWinning()
-
-        # Remove all players
-        # adr_list[self.address].join()
-        del adr_list[self.address]
-
-        print "Just delete the user", self.username
-
-        return
 
     def setStatus(self, newStatus):
         self.status = newStatus
@@ -78,12 +46,14 @@ class PlayerHandler(Thread):
     def execute(self, data):
 
         s = self.status
+
         # Status:
         # 0: Waiting
         # 1: Choose Pokemon
         # 2: Choose turn
         # 3: Fight, Switch or Surrender
-        # 4: Quit
+        # 4: Processing quitting
+        # 5: Done
         if s == 1:
             self.choosePokemon()
         elif s == 2:
@@ -96,9 +66,11 @@ class PlayerHandler(Thread):
             elif "Surrender" in data:
                 self.surrender()
         elif s == 4:
-            global server_socket
-            sendData = "q-" + self.username
-            server_socket.sendto(sendData, ("localhost", 9000))
+            if self.result == "Won":
+                print "Processing Winning"
+                self.processWinning()
+            self.setStatus(5)
+            # print self.username, "-self status", self.status
 
     def choosePokemon(self):
         global server_socket
@@ -150,6 +122,7 @@ class PlayerHandler(Thread):
 
         global adr_list
         global server_socket
+        global threadList
         # Fight type:
         # 0: Normal
         # 1: Special
@@ -205,9 +178,22 @@ class PlayerHandler(Thread):
             if len(adr_list[self.opponent].pokeList) == 0:
                 selfSendData += "Won"
                 oppSendData += "Lost"
+                self.status = 4
+                adr_list[self.opponent].status = 4
+                self.result = "Won"
+                adr_list[self.opponent].result = "Lost"
 
             server_socket.sendto(selfSendData, self.address)
             server_socket.sendto(oppSendData, adr_list[self.opponent].address)
+
+            if len(adr_list[self.opponent].pokeList) == 0:
+                t = threading.Thread(target=adr_list[self.address].execute, args=(data,))
+                t.start()
+                threadList.append(t)
+
+                t = threading.Thread(target=adr_list[self.opponent].execute, args=(data,))
+                t.start()
+                threadList.append(t)
 
         elif float(adr_list[self.opponent].curpoke["hp"]) < initialHP:
             selfSendData = "You just damaged " + str(dmg) + " HP of " +\
@@ -268,6 +254,7 @@ class PlayerHandler(Thread):
 
         global adr_list
         global server_socket
+        global threadList
 
         sendData = "Player " + self.username + " just surrendered.\n"
         sendData += "Player " + adr_list[self.opponent].username + " just won the game.\n"
@@ -278,8 +265,18 @@ class PlayerHandler(Thread):
         server_socket.sendto(sendData, self.address)
         server_socket.sendto(sendData, adr_list[self.opponent].address)
 
+        self.status = 4
+        adr_list[self.opponent].status = 4
         self.result = "Lost"
         adr_list[self.opponent].result = "Won"
+
+        t = threading.Thread(target=adr_list[self.address].execute, args=(data,))
+        t.start()
+        threadList.append(t)
+
+        t = threading.Thread(target=adr_list[self.opponent].execute, args=(data,))
+        t.start()
+        threadList.append(t)
 
         return
 
@@ -294,7 +291,7 @@ def validateLogin(username, password, address):
     file = open('../../data/players.json').read()
     playerData = json.loads(file)
 
-    print playerData
+    # print playerData
 
     for user in playerData:
         if user['username'] == username and user['password'] == password:
@@ -308,24 +305,49 @@ def validateLogin(username, password, address):
     server_socket.sendto('error', address)
     return ("", False)
 
+def collectGarbage():
+
+    global adr_list
+    global threadList
+
+    while len(adr_list.keys()) == 2:
+
+        p1 = adr_list.keys()[0]
+        p2 = adr_list.keys()[1]
+
+        # print "Current status", adr_list[p1].status, adr_list[p2].status
+
+        if adr_list[p1].status == 5 and adr_list[p2].status == 5:
+            del adr_list[p1]
+            del adr_list[p2]
+            break
+
+    for t in threadList:
+        t.join()
+        threadList.remove(t)
+
+
 while 1:
     data, address = server_socket.recvfrom(1024)
 
     players = adr_list.keys()
 
     playerNo = len(players)
+    # print "Current player no", playerNo
+
+    if address in adr_list:
+        print "Server received", data, "from", adr_list[address].username
 
     if playerNo == 2:
         if address != players[0] and address != players[1]:
             server_socket.sendto("Full", address)
-        elif adr_list[address] is p1:
-            if data == "q":
-                p1.setStatus(4)
-            p1.execute(data)
-        elif adr_list[address] is p2:
-            if data == "q":
-                p2.setStatus(4)
-            p2.execute(data)
+        elif address == players[0] or address == players[1]:
+            if adr_list[address].status != 0:
+                # print "Executing"
+                t = threading.Thread(target=adr_list[address].execute, args=(data,))
+                t.start()
+                threadList.append(t)
+
     elif playerNo == 1:
         if address not in adr_list:
             if 'Connect' in data:
@@ -334,18 +356,24 @@ while 1:
 
             if check:
                 p2 = PlayerHandler(temp[1], temp[2], address, link)
-                p2.start()
-
                 adr_list[address] = p2
+
+                collector = threading.Thread(target=collectGarbage, args=())
+                collector.start()
+                collectingThreads.append(collector)
 
                 p1.opponent = p2.address
                 p2.opponent = p1.address
 
                 p1.setStatus(1)
                 p2.setStatus(1)
+
+                p1.execute("")
+                p2.execute("")
         else:
             server_socket.sendto("Waiting", address)
     elif playerNo == 0:
+
         if address not in adr_list:
             if 'Connect' in data:
                 temp = data.split('-')
@@ -354,9 +382,13 @@ while 1:
 
             if check:
                 p1 = PlayerHandler(temp[1], temp[2], address, link)
-                p1.start()
                 adr_list[address] = p1
         else:
             server_socket.sendto("Waiting", address)
+
+
+for t in collectingThreads:
+    t.join()
+    collectingThreads.remove(t)
 
 server_socket.close()
