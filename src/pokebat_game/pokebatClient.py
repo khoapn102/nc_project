@@ -37,7 +37,7 @@ recvData, address = client_socket.recvfrom(1024)
 file = open(recvData).read()
 playerData = json.loads(file)
 
-pokeList = playerData["player_bag"]
+pokeList = list(playerData["player_bag"])
 
 selectedPokemons = []
 killedPokemons = []
@@ -106,31 +106,50 @@ wasKilled = False
 def fight():
     global client_socket
     client_socket.sendto("Fight", ("localhost", 9000))
+    return
 
 def switch():
     global client_socket
-    client_socket.sendto("Switch", ("localhost", 9000))
 
     global curpoke
     global playerData
 
-    pokeList = playerData["player_bag"]
-    for poke in pokeList:
-        # print poke["id"], pokeid
-        if str(poke["id"]) == str(curpoke):
-            pokeList.remove(poke)
-            break
+    global selectedPokemons
+
+    pokeList = []
+
+    # print "The current pokemon list:"
+    # print pokeList
+
+    curid = 0
+
+    while curid < len(selectedPokemons):
+        if selectedPokemons[curid] == curpoke:
+            curid += 1
+
+        for poke in playerData["player_bag"]:
+            # print poke["id"], str(curpoke), str(selectedPokemons[curid])
+
+            if str(poke["id"]) != str(curpoke) and str(poke["id"]) == str(selectedPokemons[curid]):
+                pokeList.append(poke)
+                curid += 1
+                break
+
+    # print "The current pokemon list:"
+    # print pokeList
 
     displayPokemonList(pokeList)
-    pokeid = raw_input("Please choose the id of the pokemon you want to switch")
+    pokeid = raw_input("Please choose the id of the pokemon you want to switch: ")
+
     curpoke = pokeid
     sendData = "Switch-" + pokeid
     client_socket.sendto(sendData, ("localhost", 9000))
-
+    return
 
 def surrender():
     global client_socket
     client_socket.sendto("Surrender", ("localhost", 9000))
+    return
 
 def displayMenu():
 
@@ -140,7 +159,7 @@ def displayMenu():
         cmd = "Please choose your action:\n"
         cmd += "1: Fight\n"
         cmd += "2: Switch pokemon\n"
-        cmd += "3: Surrender"
+        cmd += "3: Surrender\n"
 
         while True:
             opt = raw_input(cmd)
@@ -156,7 +175,7 @@ def displayMenu():
     else:
         cmd = "Please choose your action:\n"
         cmd += "1: Switch pokemon\n"
-        cmd += "2: Surrender"
+        cmd += "2: Surrender\n"
 
         while True:
             opt = raw_input(cmd)
@@ -166,6 +185,7 @@ def displayMenu():
             elif opt == "2":
                 surrender()
                 return "Surrender"
+    return ""
 
 while 1:
     # Send 'Connect Signal'
@@ -175,19 +195,29 @@ while 1:
 
         status = displayMenu()
 
+        # print "Current status", status
+
         if "Surrender" in status:
             recvData, address = client_socket.recvfrom(1024)
             print recvData
 
             client_socket.sendto("q", ("localhost", 9000))
             break
+
         elif "Fight" in status:
             recvData, address = client_socket.recvfrom(1024)
-            print recvData
 
             if "Won" in recvData:
+                print recvData.split("\n")[0]
+                print "You just won the PokeBat game."
                 client_socket.sendto("q", ("localhost", 9000))
                 break
+
+            print recvData
+
+        elif "Switch" in status:
+            recvData, address = client_socket.recvfrom(1024)
+            print recvData
 
     elif turn == 1:
         print "It's other player's turn"
@@ -198,8 +228,9 @@ while 1:
             print recvData
             client_socket.sendto("q", ("localhost", 9000))
             break
-        elif recvData == "killed":
-            killedPokemons.append(int(recvData.split("\n")[1]))
+
+        elif "killed" in recvData:
+            selectedPokemons.remove(recvData.split("\n")[1])
             wasKilled = True
         else:
             wasKilled = False
@@ -207,11 +238,12 @@ while 1:
         print recvData.split("\n")[0]
 
         if "Lost" in recvData:
-            print "You just lost the game"
+            print "You just lost the PokeBat game."
             client_socket.sendto("q", ("localhost", 9000))
             break
 
     turn = (turn + 1) % 2
 
-print "Thank you for playing"
+print "Thank you for playing PokeBat game."
+
 client_socket.close()

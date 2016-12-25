@@ -34,7 +34,9 @@ class PlayerHandler(Thread):
         # Status:
         # 0: Waiting
         # 1: Choose Pokemon
-        # 2: Fight, Switch or Surrender
+        # 2: Choose turn
+        # 3: Fight, Switch or Surrender
+        # 4: Quit
         self.status = 0
         self.pokemons = []
 
@@ -46,20 +48,27 @@ class PlayerHandler(Thread):
             if self.status != 0 and self.status != 1:
                 data, address = server_socket.recvfrom(1024)
                 print data
+                if "q-" in data:
+                    if data.split("-")[1] == self.username and self.status == 4:
+                        break
 
             if address == self.address:
                 if data == "q":
                     break
                 self.execute(data)
             elif address == self.opponent:
+                if data == "q":
+                    adr_list[self.opponent].status = 4
                 adr_list[self.opponent].execute(data)
 
         if self.result == "Won":
             self.processWinning()
 
         # Remove all players
-        adr_list[self.address].join()
+        # adr_list[self.address].join()
         del adr_list[self.address]
+
+        print "Just delete the user", self.username
 
         return
 
@@ -72,7 +81,9 @@ class PlayerHandler(Thread):
         # Status:
         # 0: Waiting
         # 1: Choose Pokemon
-        # 2: Fight, Switch or Surrender
+        # 2: Choose turn
+        # 3: Fight, Switch or Surrender
+        # 4: Quit
         if s == 1:
             self.choosePokemon()
         elif s == 2:
@@ -84,6 +95,10 @@ class PlayerHandler(Thread):
                 self.switch(data)
             elif "Surrender" in data:
                 self.surrender()
+        elif s == 4:
+            global server_socket
+            sendData = "q-" + self.username
+            server_socket.sendto(sendData, ("localhost", 9000))
 
     def choosePokemon(self):
         global server_socket
@@ -99,21 +114,25 @@ class PlayerHandler(Thread):
 
         pokes = recvData.split("-")
 
-        print "Pokes", pokes
+        # print "Pokes", pokes
 
         file = open(self.playerjson).read()
         playerData = json.loads(file)
 
         tempList = playerData["player_bag"]
+        curid = 0
 
-        for poke in tempList:
-            for curid in pokes:
-                if str(poke["id"]) == curid:
+        while len(self.pokeList) < 3:
+            for poke in tempList:
+                if str(poke["id"]) == pokes[curid]:
                     self.pokeList.append(poke)
-                    pokes.remove(curid)
+                    curid += 1
                     break
 
+        # print self.pokeList
+
         self.curpoke = self.pokeList[0]
+        # print self.curpoke["name"], self.curpoke["id"]
         self.speed = int(self.pokeList[0]["speed"])
 
         while adr_list[self.opponent].speed == -1:
@@ -140,18 +159,19 @@ class PlayerHandler(Thread):
 
         if fightType == 0:
             dmg = float(self.curpoke["atk"]) - float(adr_list[self.opponent].curpoke["b_def"])
-
         elif fightType == 1:
             oppTypes = adr_list[self.opponent].curpoke["type"]
             specialAtks = self.curpoke["dmg_atked"]
 
-            maxMultiply = -1
+            maxMultiply = 1
             for atk in specialAtks:
                 for oppType in oppTypes:
                     if atk["type"] == oppType and int(atk["multiply"]) > maxMultiply:
                         maxMultiply = int(atk["multiply"])
 
             dmg = float(self.curpoke["spec_atk"]) * float(maxMultiply) - float(adr_list[self.opponent].curpoke["b_def"])
+
+        # print fightType, dmg, initialHP
 
         if dmg > 0.0:
             adr_list[self.opponent].curpoke["hp"] = str(float(adr_list[self.opponent].curpoke["hp"]) - dmg)
@@ -168,19 +188,19 @@ class PlayerHandler(Thread):
 
             if fightType == 0:
                 selfSendData += " by normal attack.\n"
-                oppSendData += " by normal attack.\n" + adr_list[self.opponent].curpoke["id"] + "\n"
+                oppSendData += " by normal attack.\n" + str(adr_list[self.opponent].curpoke["id"]) + "\n"
             else:
                 selfSendData += " by special attack.\n"
-                oppSendData += " by special attack.\n"
+                oppSendData += " by special attack.\n" + str(adr_list[self.opponent].curpoke["id"]) + "\n"
 
-            print len(adr_list[self.opponent].pokeList)
+            # print len(adr_list[self.opponent].pokeList)
 
             for poke in adr_list[self.opponent].pokeList:
                 if poke["id"] == adr_list[self.opponent].curpoke["id"]:
                     adr_list[self.opponent].pokeList.remove(poke)
                     break
 
-            print len(adr_list[self.opponent].pokeList)
+            # print len(adr_list[self.opponent].pokeList)
 
             if len(adr_list[self.opponent].pokeList) == 0:
                 selfSendData += "Won"
@@ -204,16 +224,43 @@ class PlayerHandler(Thread):
 
             server_socket.sendto(selfSendData, self.address)
             server_socket.sendto(oppSendData, adr_list[self.opponent].address)
+        else:
+            selfSendData = "You could not damage " + adr_list[self.opponent].curpoke["name"] + " using " + self.curpoke[
+                "name"]
+            oppSendData = "Your " + adr_list[self.opponent].curpoke["name"] + " was not damaged by " + self.curpoke["name"]
+
+            if fightType == 0:
+                selfSendData += " by normal attack.\n"
+                oppSendData += " by normal attack.\n"
+            else:
+                selfSendData += " by special attack.\n"
+                oppSendData += " by special attack.\n"
+
+            server_socket.sendto(selfSendData, self.address)
+            server_socket.sendto(oppSendData, adr_list[self.opponent].address)
+            pass
 
         return
 
     def switch(self, data):
 
+        global server_socket
+
         newid = data.split("-")[1]
+
+        selfSendData = "You just switched from " + self.curpoke["name"] + " to "
+        oppSendData = "Your opponent just switched from " + self.curpoke["name"] + " to "
+
         for poke in self.pokeList:
-            if poke["id"] == newid:
+            if str(poke["id"]) == str(newid):
                 self.curpoke = poke
                 break
+
+        selfSendData += self.curpoke["name"] + "\n"
+        oppSendData += self.curpoke["name"] + "\n"
+
+        server_socket.sendto(selfSendData, self.address)
+        server_socket.sendto(oppSendData, adr_list[self.opponent].address)
 
         return
 
@@ -272,8 +319,12 @@ while 1:
         if address != players[0] and address != players[1]:
             server_socket.sendto("Full", address)
         elif adr_list[address] is p1:
+            if data == "q":
+                p1.setStatus(4)
             p1.execute(data)
         elif adr_list[address] is p2:
+            if data == "q":
+                p2.setStatus(4)
             p2.execute(data)
     elif playerNo == 1:
         if address not in adr_list:
