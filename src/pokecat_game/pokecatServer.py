@@ -9,22 +9,22 @@ import json
 from core.validation import *
 
 # The constant parameters of the PokeCat module
-# pokeNum = 13
-# worldSz = 1000
-# maxPokeNum = 50
-# moveDuration = 1
-# turnDuration = 120
-# spawning_time = 60
-# despawning_time = 300
+pokeNum = 150
+worldSz = 1000
+maxPokeNum = 50
+moveDuration = 1
+turnDuration = 120
+spawning_time = 60
+despawning_time = 300
 update_player_time = 2
 
-pokeNum = 150
-worldSz = 5
-maxPokeNum = 5
-moveDuration = 1
-turnDuration = 10
-spawning_time = 5
-despawning_time = 6
+# pokeNum = 150
+# worldSz = 5
+# maxPokeNum = 5
+# moveDuration = 1
+# turnDuration = 10
+# spawning_time = 5
+# despawning_time = 6
 
 # Binding Server
 server_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)

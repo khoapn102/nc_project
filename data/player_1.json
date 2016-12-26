@@ -148,131 +148,131 @@
             "type": [
                 "fire"
             ]
-        }, 
+        },
         {
-            "accum_exp": 2320, 
-            "atk": 177.3, 
-            "b_def": 151.9, 
-            "b_exp": 145, 
-            "cur_lvl": 5, 
-            "curr_exp": 0, 
+            "accum_exp": 2320,
+            "atk": 177.3,
+            "b_def": 151.9,
+            "b_exp": 145,
+            "cur_lvl": 5,
+            "curr_exp": 0,
             "dmg_atked": [
                 {
-                    "multiply": 2, 
+                    "multiply": 2,
                     "type": "bug"
-                }, 
+                },
                 {
-                    "multiply": 2, 
+                    "multiply": 2,
                     "type": "ghost"
-                }, 
+                },
                 {
-                    "multiply": 2, 
+                    "multiply": 2,
                     "type": "dark"
-                }, 
+                },
                 {
-                    "multiply": 0.5, 
+                    "multiply": 0.5,
                     "type": "fighting"
-                }, 
+                },
                 {
-                    "multiply": 0.5, 
+                    "multiply": 0.5,
                     "type": "psychic"
                 }
-            ], 
-            "ev": 0.5, 
-            "evolve_id": 65, 
-            "evolve_lvl": 55, 
-            "hp": 202.5, 
-            "id": 64, 
-            "is_new": false, 
-            "name": "kadabra", 
-            "nxt_lvl": 6, 
-            "spec_atk": 607.5, 
-            "spec_def": 354.5, 
-            "speed": 105, 
+            ],
+            "ev": 0.5,
+            "evolve_id": 65,
+            "evolve_lvl": 55,
+            "hp": 202.5,
+            "id": 64,
+            "is_new": false,
+            "name": "kadabra",
+            "nxt_lvl": 6,
+            "spec_atk": 607.5,
+            "spec_def": 354.5,
+            "speed": 105,
             "type": [
                 "psychic"
             ]
-        }, 
+        },
         {
-            "accum_exp": 172, 
-            "atk": 95, 
-            "b_def": 80, 
-            "b_exp": 172, 
-            "cur_lvl": 1, 
-            "curr_exp": 0, 
+            "accum_exp": 172,
+            "atk": 95,
+            "b_def": 80,
+            "b_exp": 172,
+            "cur_lvl": 1,
+            "curr_exp": 0,
             "dmg_atked": [
                 {
-                    "multiply": 2, 
+                    "multiply": 2,
                     "type": "fighting"
-                }, 
+                },
                 {
-                    "multiply": 0, 
+                    "multiply": 0,
                     "type": "ghost"
                 }
-            ], 
-            "ev": 0.7, 
-            "evolve_id": 0, 
-            "evolve_lvl": 0, 
-            "hp": 105, 
-            "id": 115, 
-            "is_new": false, 
-            "name": "Kangaskhan", 
-            "nxt_lvl": 2, 
-            "spec_atk": 40, 
-            "spec_def": 80, 
-            "speed": 90, 
+            ],
+            "ev": 0.7,
+            "evolve_id": 0,
+            "evolve_lvl": 0,
+            "hp": 105,
+            "id": 115,
+            "is_new": false,
+            "name": "Kangaskhan",
+            "nxt_lvl": 2,
+            "spec_atk": 40,
+            "spec_def": 80,
+            "speed": 90,
             "type": [
                 "normal"
             ]
-        }, 
+        },
         {
-            "accum_exp": 220, 
-            "atk": 135.8, 
-            "b_def": 150.3, 
-            "b_exp": 55, 
-            "cur_lvl": 3, 
-            "curr_exp": 0, 
+            "accum_exp": 220,
+            "atk": 135.8,
+            "b_def": 150.3,
+            "b_exp": 55,
+            "cur_lvl": 3,
+            "curr_exp": 0,
             "dmg_atked": [
                 {
-                    "multiply": 2, 
+                    "multiply": 2,
                     "type": "psychic"
-                }, 
+                },
                 {
-                    "multiply": 2, 
+                    "multiply": 2,
                     "type": "ground"
-                }, 
+                },
                 {
-                    "multiply": 0.5, 
+                    "multiply": 0.5,
                     "type": "fairy"
-                }, 
+                },
                 {
-                    "multiply": 0.5, 
+                    "multiply": 0.5,
                     "type": "grass"
-                }, 
+                },
                 {
-                    "multiply": 0.5, 
+                    "multiply": 0.5,
                     "type": "bug"
-                }, 
+                },
                 {
-                    "multiply": 0.5, 
+                    "multiply": 0.5,
                     "type": "poison"
-                }, 
+                },
                 {
-                    "multiply": 0.5, 
+                    "multiply": 0.5,
                     "type": "fighting"
                 }
-            ], 
-            "ev": 0.7, 
-            "evolve_id": 30, 
-            "evolve_lvl": 16, 
-            "hp": 158.9, 
-            "id": 29, 
-            "is_new": false, 
-            "name": "nidoran_female", 
-            "nxt_lvl": 4, 
-            "spec_atk": 115.6, 
-            "spec_def": 115.6, 
-            "speed": 41, 
+            ],
+            "ev": 0.7,
+            "evolve_id": 30,
+            "evolve_lvl": 16,
+            "hp": 158.9,
+            "id": 29,
+            "is_new": false,
+            "name": "nidoran_female",
+            "nxt_lvl": 4,
+            "spec_atk": 115.6,
+            "spec_def": 115.6,
+            "speed": 41,
             "type": [
                 "poison"
             ]

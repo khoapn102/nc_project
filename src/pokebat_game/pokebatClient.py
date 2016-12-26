@@ -287,7 +287,7 @@ while 1:
     # Send 'Connect Signal'
     if turn == 0:
 
-        print "It's your turn"
+        print "\nIt's your turn"
 
         answer = raw_input('Do you want to destroy a pokemon to level up your fighting pokemons ? (y/n)')
 
@@ -301,6 +301,7 @@ while 1:
         if "Surrender" in status:
             recvData, address = client_socket.recvfrom(1024)
             print recvData
+            print "*****************************************"
 
             # client_socket.sendto("q", ("localhost", 9000))
             break
@@ -311,22 +312,26 @@ while 1:
             if "Won" in recvData:
                 print recvData.split("\n")[0]
                 print "You just won the PokeBat game."
+                print "*****************************************"
                 # client_socket.sendto("q", ("localhost", 9000))
                 break
 
             print recvData
+            print "*****************************************"
 
         elif "Switch" in status:
             recvData, address = client_socket.recvfrom(1024)
             print recvData
+            print "*****************************************"
 
     elif turn == 1:
-        print "It's other player's turn"
+        print "\nIt's other player's turn"
 
         recvData, address = client_socket.recvfrom(1024)
 
         if "surrendered" in recvData:
             print recvData
+            print "*****************************************"
             # client_socket.sendto("q", ("localhost", 9000))
             break
 
@@ -337,6 +342,7 @@ while 1:
             wasKilled = False
 
         print recvData.split("\n")[0]
+        print "*****************************************"
 
         if "Lost" in recvData:
             print "You just lost the PokeBat game."
